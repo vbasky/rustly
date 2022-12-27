@@ -32,9 +32,9 @@ fn main() {
 
     println!("u64 max is {}", u64::MAX);
 
-    let mut factorial: u128 = factorial::factorial(15);
+    let mut factorial_result: u128 = factorial::factorial(15);
 
-    println!("Factorial is {}", factorial);
+    println!("Factorial is {}", factorial_result);
 
     println!("Random number {}", rand::thread_rng().gen_range(1..101));
 

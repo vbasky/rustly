@@ -16,3 +16,14 @@ impl Day {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Day;
+
+    #[test]
+    fn check_is_weekend() {
+        let today = Day::Monday;
+        assert_eq!(today.is_weekend(), false);
+    }
+}
