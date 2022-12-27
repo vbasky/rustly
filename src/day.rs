@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub enum Day {
     Monday,
     Tuesday,
@@ -8,11 +9,19 @@ pub enum Day {
     Sunday,
 }
 
+impl Default for Day {
+    fn default() -> Self {
+        Self::Sunday
+    }
+}
+
 impl Day {
     pub fn is_weekend(&self) -> bool {
         match self {
             Day::Saturday | Day::Sunday => return true,
-            _ => return false,
+            Day::Monday | Day::Tuesday | Day::Wednesday | Day::Thursday | Day::Friday => {
+                return false
+            }
         }
     }
 }

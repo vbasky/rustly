@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use crate::bank::Bank;
 use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
@@ -8,11 +6,10 @@ use crate::day::Day;
 use crate::shape::Circle;
 use crate::shape::Rectangle;
 use crate::shape::Shape;
-use chrono::{DateTime, Local, Timelike, Utc};
+use chrono::Local;
 use rand::Rng;
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::thread;
 
 mod bank;
 mod calculator;
@@ -32,7 +29,7 @@ fn main() {
 
     println!("u64 max is {}", u64::MAX);
 
-    let mut factorial_result: u128 = factorial::factorial(15);
+    let factorial_result: u128 = factorial::factorial(15);
 
     println!("Factorial is {}", factorial_result);
 
@@ -71,14 +68,14 @@ fn main() {
 
     println!("Is today weekend {}", today.is_weekend());
 
-    let vec1: Vec<i32> = Vec::new();
+    let _vec1: Vec<i32> = Vec::new();
     let mut vec2: Vec<i32> = vec![1, 2, 3, 4, 5];
     vec2.push(6);
 
-    let second = &vec2[1];
+    let _second = &vec2[1];
 
     match vec2.get(1) {
-        Some(second) => println!(),
+        Some(_second) => println!(),
         None => println!("No 2nd value"),
     }
 
@@ -110,7 +107,7 @@ fn main() {
         println!("{} = {}", k, v);
     }
 
-    let mut bob = Customer {
+    let bob = Customer {
         name: String::from("Bob Smith"),
         address: String::from("Corldon Ave"),
         balance: 34.50,
@@ -118,7 +115,7 @@ fn main() {
 
     println!("{}", bob.welcome());
 
-    let mut rectangle = Rectangle {
+    let _rectangle = Rectangle {
         length: 10.0,
         height: 4.2,
     };
@@ -135,7 +132,7 @@ fn main() {
     println!("Sum {}", use_func(5, 4, sum));
     println!("Prod {} ", use_func(5, 8, prod));
 
-    let mut bank = Bank { balance: 50.0 };
+    let mut bank = Bank::new(50.0);
     bank.withdraw(20.0);
     println!("Balance {}", bank.balance);
 }

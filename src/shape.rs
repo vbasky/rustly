@@ -6,8 +6,8 @@ pub struct Rectangle {
 }
 
 pub struct Circle {
-    length: f32,
-    height: f32,
+    pub length: f32,
+    pub height: f32,
 }
 
 pub trait Shape {
