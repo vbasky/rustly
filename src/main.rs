@@ -10,15 +10,19 @@ use chrono::Local;
 use rand::Rng;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::ErrorKind;
 
 mod bank;
 mod calculator;
 mod closure;
 pub mod customer;
 mod day;
-mod factorial;
+mod file;
+mod math;
 mod shape;
 
+#[allow(unused)]
 fn main() {
     let my_age = 18;
     let voting_age = 18;
@@ -29,7 +33,7 @@ fn main() {
 
     println!("u64 max is {}", u64::MAX);
 
-    let factorial_result: u128 = factorial::factorial(15);
+    let factorial_result: u128 = math::factorial(15);
 
     println!("Factorial is {}", factorial_result);
 
@@ -165,4 +169,26 @@ fn main() {
     }
 
     println!("{:?}", map);
+
+    let greeting_file_result = File::open("hello.txt");
+
+    let greeting_file = match greeting_file_result {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => match File::create("hello.txt") {
+                Ok(fc) => fc,
+                Err(e) => panic!("Problem creating the file: {:?}", e),
+            },
+            other_error => {
+                panic!("Problem opening the file: {:?}", other_error);
+            }
+        },
+    };
+
+    let file = String::from("hello.txt");
+
+    let read_from_file = file::read_username_from_file(file);
+    println!("Read username is {:?}", read_from_file);
+
+    println!("Largest is {}", math::largest(&vec2));
 }
