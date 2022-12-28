@@ -113,10 +113,11 @@ fn main() {
         balance: 34.50,
     };
 
+    println!("Customer is {:#?}", bob);
     println!("{}", bob.welcome());
 
     let _rectangle = Rectangle {
-        length: 10.0,
+        width: 10.0,
         height: 4.2,
     };
 
@@ -135,4 +136,33 @@ fn main() {
     let mut bank = Bank::new(50.0);
     bank.withdraw(20.0);
     println!("Balance {}", bank.balance);
+
+    let lit_x = 5;
+    let some_x: Option<i32> = Some(0);
+
+    let result_some = lit_x + some_x.unwrap_or(0);
+    println!("Result of Option Addition {}", result_some);
+
+    let hindi = "नमस्ते";
+    for c in hindi.chars() {
+        println!("{c}");
+    }
+
+    let mut map = HashMap::new();
+    let field_name = String::from("Favorite color");
+    let field_value = String::from("Blue");
+    map.insert(field_name, field_value);
+
+    println!("{:?}", map);
+
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:?}", map);
 }
