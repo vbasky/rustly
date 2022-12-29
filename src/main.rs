@@ -57,7 +57,7 @@ fn main() {
         print!("{} ", char);
     }
 
-    println!("");
+    println!();
     println!("Printing chars");
     let st3 = String::from("a n s i y p a");
     let mut v1: Vec<char> = st3.chars().collect();

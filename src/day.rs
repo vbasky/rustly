@@ -18,10 +18,8 @@ impl Default for Day {
 impl Day {
     pub fn is_weekend(&self) -> bool {
         match self {
-            Day::Saturday | Day::Sunday => return true,
-            Day::Monday | Day::Tuesday | Day::Wednesday | Day::Thursday | Day::Friday => {
-                return false
-            }
+            Day::Saturday | Day::Sunday => true,
+            Day::Monday | Day::Tuesday | Day::Wednesday | Day::Thursday | Day::Friday => false,
         }
     }
 }

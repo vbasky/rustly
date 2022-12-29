@@ -15,7 +15,7 @@ impl Customer {
     }
 
     pub fn welcome(&self) -> String {
-        return String::from("Welcome ") + &self.name;
+        String::from("Welcome ") + &self.name
     }
 }
 

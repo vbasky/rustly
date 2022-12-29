@@ -17,18 +17,18 @@ pub trait Shape {
 
 impl Shape for Rectangle {
     fn new(width: f32, height: f32) -> Rectangle {
-        return Rectangle { width, height };
+        Rectangle { width, height }
     }
     fn area(&self) -> f32 {
-        return self.width * self.height;
+        self.width * self.height
     }
 }
 
 impl Shape for Circle {
     fn new(width: f32, height: f32) -> Circle {
-        return Circle { width, height };
+        Circle { width, height }
     }
     fn area(&self) -> f32 {
-        return (self.width / 2.0).powf(2.0) * PI;
+        (self.width / 2.0).powf(2.0) * PI
     }
 }
