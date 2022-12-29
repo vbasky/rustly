@@ -1,6 +1,7 @@
 use crate::bank::Bank;
 use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
+use crate::config::Config;
 use crate::customer::Customer;
 use crate::day::Day;
 use crate::shape::Circle;
@@ -12,13 +13,17 @@ use chrono::Local;
 use rand::Rng;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::env;
+use std::fs;
 use std::fs::File;
 use std::io::ErrorKind;
+use std::process;
 
 mod aggregator;
 mod bank;
 mod calculator;
 mod closure;
+mod config;
 pub mod customer;
 mod day;
 mod file;
@@ -28,6 +33,20 @@ mod string;
 
 #[allow(unused)]
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1)
+    });
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents =
+        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+
     let my_age = 18;
     let voting_age = 18;
 
