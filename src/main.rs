@@ -6,6 +6,8 @@ use crate::day::Day;
 use crate::shape::Circle;
 use crate::shape::Rectangle;
 use crate::shape::Shape;
+use crate::string::{longest, longest_with_an_announcement};
+use aggregator::{NewsArticle, Summary, Tweet};
 use chrono::Local;
 use rand::Rng;
 use std::cmp::Ordering;
@@ -13,6 +15,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::ErrorKind;
 
+mod aggregator;
 mod bank;
 mod calculator;
 mod closure;
@@ -21,6 +24,7 @@ mod day;
 mod file;
 mod math;
 mod shape;
+mod string;
 
 #[allow(unused)]
 fn main() {
@@ -191,4 +195,47 @@ fn main() {
     println!("Read username is {:?}", read_from_file);
 
     println!("Largest is {}", math::largest(&vec2));
+
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    };
+
+    println!("1 new tweet: {}", tweet.summarize());
+
+    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best \
+             hockey team in the NHL.",
+        ),
+    };
+
+    println!("New article available! {}", article.summarize());
+
+    let string1 = String::from("Longer String");
+
+    {
+        let string2 = String::from("Short");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is {}", result);
+
+        let result_announcement =
+            longest_with_an_announcement(string1.as_str(), string2.as_str(), "Important");
+        println!("{}", result_announcement);
+    }
+
+    struct ImportantExcerpt<'a> {
+        part: &'a str,
+    }
+
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
 }
