@@ -1,6 +1,7 @@
 use crate::bank::Bank;
 use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
+use crate::config::run;
 use crate::config::Config;
 use crate::customer::Customer;
 use crate::day::Day;
@@ -14,7 +15,6 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::env;
-use std::fs;
 use std::fs::File;
 use std::io::ErrorKind;
 use std::process;
@@ -42,10 +42,10 @@ fn main() {
     println!("Searching for {}", config.query);
     println!("In file {}", config.file_path);
 
-    let contents =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
-
-    println!("With text:\n{contents}");
+    if let Err(e) = run(config) {
+        println!("Application error : {e}");
+        process::exit(1);
+    }
 
     let my_age = 18;
     let voting_age = 18;
