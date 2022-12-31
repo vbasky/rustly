@@ -257,4 +257,8 @@ fn main() {
     let i = ImportantExcerpt {
         part: first_sentence,
     };
+
+    let number: f64 = 1.0;
+    let width: usize = 5;
+    println!("{number:>width$}");
 }
