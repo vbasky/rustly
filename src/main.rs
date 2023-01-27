@@ -1,23 +1,26 @@
 use crate::bank::Bank;
 use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
-use crate::config::run;
-use crate::config::Config;
+use crate::guess::Guess;
+use crate::math::divide;
+// use crate::config::run;
+// use crate::config::Config;
 use crate::customer::Customer;
 use crate::day::Day;
 use crate::shape::Circle;
 use crate::shape::Rectangle;
 use crate::shape::Shape;
+use crate::string::first_word;
 use crate::string::{longest, longest_with_an_announcement};
 use aggregator::{NewsArticle, Summary, Tweet};
 use chrono::Local;
-use rand::Rng;
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::env;
+// use std::env;
 use std::fs::File;
 use std::io::ErrorKind;
-use std::process;
+// use std::net::IpAddr;
+// use std::process;
 
 mod aggregator;
 mod bank;
@@ -27,25 +30,26 @@ mod config;
 pub mod customer;
 mod day;
 mod file;
+mod guess;
 mod math;
 mod shape;
 mod string;
 
 #[allow(unused)]
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let config = Config::build(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {err}");
-        process::exit(1)
-    });
+    // let args: Vec<String> = env::args().collect();
+    // let config = Config::build(&args).unwrap_or_else(|err| {
+    //     println!("Problem parsing arguments: {err}");
+    //     process::exit(1)
+    // });
 
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.file_path);
+    // println!("Searching for {}", config.query);
+    // println!("In file {}", config.file_path);
 
-    if let Err(e) = run(config) {
-        println!("Application error : {e}");
-        process::exit(1);
-    }
+    // if let Err(e) = run(config) {
+    //     println!("Application error : {e}");
+    //     process::exit(1);
+    // }
 
     let my_age = 18;
     let voting_age = 18;
@@ -60,7 +64,7 @@ fn main() {
 
     println!("Factorial is {}", factorial_result);
 
-    println!("Random number {}", rand::thread_rng().gen_range(1..101));
+    // println!("Random number {}", rand::thread_rng().gen_range(1..101));
 
     match my_age.cmp(&voting_age) {
         Ordering::Less => println!("Cant vote"),
@@ -151,6 +155,7 @@ fn main() {
     let rectangle: Rectangle = Shape::new(10.0, 2.3);
     let circle: Circle = Shape::new(12.2, 2.4);
 
+    println!("The Rect is {:#?}", _rectangle);
     println!("Rect area is {}", rectangle.area());
     println!("Circle area is  {}", circle.area());
 
@@ -210,7 +215,7 @@ fn main() {
 
     let file = String::from("hello.txt");
 
-    let read_from_file = file::read_username_from_file(file);
+    let read_from_file = file::read_username_from_file(file).unwrap();
     println!("Read username is {:?}", read_from_file);
 
     println!("Largest is {}", math::largest(&vec2));
@@ -261,4 +266,26 @@ fn main() {
     let number: f64 = 1.0;
     let width: usize = 5;
     println!("{number:>width$}");
+
+    let mut invocation = String::from("hello world");
+    let word = first_word(&invocation);
+
+    println!("First word is {}", word);
+
+    let mut i = 10;
+
+    for i in [2, 1] {
+        println!("{}", i);
+    }
+
+    let result = divide(2.0, 3.0);
+
+    match result {
+        Some(result) => println!("Result is {:?}", result),
+        None => println!("Unable to divide by 0"),
+    }
+
+    let guess = Guess::new(50);
+    println!("{:#?}", guess);
+    println!("{}", guess.hit());
 }
