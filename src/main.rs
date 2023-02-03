@@ -3,10 +3,12 @@ use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
 use crate::guess::Guess;
 use crate::math::divide;
+use crate::shape::Point;
 // use crate::config::run;
 // use crate::config::Config;
 use crate::customer::Customer;
 use crate::day::Day;
+use crate::math::largest;
 use crate::shape::Circle;
 use crate::shape::Rectangle;
 use crate::shape::Shape;
@@ -15,8 +17,8 @@ use crate::string::{longest, longest_with_an_announcement};
 use aggregator::{NewsArticle, Summary, Tweet};
 use chrono::Local;
 use std::cmp::Ordering;
-use std::collections::HashMap;
 // use std::env;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::ErrorKind;
 // use std::net::IpAddr;
@@ -220,6 +222,20 @@ fn main() {
 
     println!("Largest is {}", math::largest(&vec2));
 
+    let number_list = vec![10, 20, 13, 6, 8, 100];
+    let char_list = vec!['a', 'b', 'y', 'x'];
+
+    let result = largest(&number_list);
+    println!("The largest number is {}", result);
+
+    let result = largest(&char_list);
+    println!("The largest character is {}", result);
+
+    let p = Point { x: 10.0, y: 15.2 };
+
+    println!("p.x = {}", p.x());
+    println!("p distance = {}", p.distance_from_origin());
+
     let tweet = Tweet {
         username: String::from("horse_ebooks"),
         content: String::from("of course, as you probably already know, people"),
@@ -288,4 +304,74 @@ fn main() {
     let guess = Guess::new(50);
     println!("{:#?}", guess);
     println!("{}", guess.hit());
+
+    let color = RGB {
+        r: 255,
+        g: 80,
+        b: 100,
+    };
+    let yuv = color.to_yuv();
+    println!("YUV: ({}, {}, {})", yuv.y, yuv.u, yuv.v);
+
+    let iast = "namo nArAyaNA";
+    let slp1 = slp1_to_iast(iast);
+    println!("IAST: {}", iast);
+    println!("SLP1: {}", slp1);
+}
+
+struct RGB {
+    r: u8,
+    g: u8,
+    b: u8,
+}
+
+struct YUV {
+    y: f32,
+    u: f32,
+    v: f32,
+}
+
+impl RGB {
+    fn to_yuv(&self) -> YUV {
+        let r = self.r as f32 / 255.0;
+        let g = self.g as f32 / 255.0;
+        let b = self.b as f32 / 255.0;
+
+        let y = 0.299 * r + 0.587 * g + 0.114 * b;
+        let u = -0.14713 * r - 0.288862 * g + 0.436 * b;
+        let v = 0.615 * r - 0.51498 * g - 0.10001 * b;
+
+        YUV { y, u, v }
+    }
+}
+
+fn slp1_to_iast(input: &str) -> String {
+    let map = [
+        ("a", "ā"),
+        ("A", "Ā"),
+        ("i", "ī"),
+        ("I", "Ī"),
+        ("u", "ū"),
+        ("U", "Ū"),
+        ("f", "ḥ"),
+        ("x", "ñ"),
+        ("e", "ē"),
+        ("E", "Ē"),
+        ("o", "ō"),
+        ("O", "Ō"),
+    ];
+    let mut transliteration_map = HashMap::new();
+    for &(slp1, iast) in map.iter() {
+        transliteration_map.insert(slp1, iast);
+    }
+
+    let mut result = String::new();
+    for character in input.chars() {
+        if let Some(iast_char) = transliteration_map.get(&character.to_string() as &str) {
+            result.push_str(iast_char);
+        } else {
+            result.push(character);
+        }
+    }
+    result
 }
