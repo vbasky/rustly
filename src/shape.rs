@@ -50,3 +50,18 @@ impl Point<f32> {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::*;
+    use std::mem;
+
+    #[test]
+    fn check_mem_size() {
+        assert_eq!(mem::size_of::<Rectangle>(), 2 * mem::size_of::<f32>());
+        assert_eq!(
+            mem::size_of::<[Rectangle; 2]>(),
+            2 * mem::size_of::<f32>() * 2
+        );
+    }
+}

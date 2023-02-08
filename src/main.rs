@@ -283,7 +283,7 @@ fn main() {
     let width: usize = 5;
     println!("{number:>width$}");
 
-    let mut invocation = String::from("hello world");
+    let invocation = String::from("hello world");
     let word = first_word(&invocation);
 
     println!("First word is {}", word);
