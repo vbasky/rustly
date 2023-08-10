@@ -8,7 +8,7 @@ pub fn exif_reader() {
     let mut count = 0;
     for e in WalkDir::new("./src/images")
         .into_iter()
-        .inspect(|_| count+= 1)
+        .inspect(|_| count += 1)
         .filter_map(|e| e.ok())
     {
         if e.metadata().unwrap().is_file() {
@@ -58,11 +58,11 @@ pub fn exif_reader() {
                 Tag::Model,
                 Tag::PixelXDimension,
                 Tag::PixelYDimension,
-                Tag::XResolution,
+                Tag::XResolution,				
             ];
             for tag in tag_list {
                 if let Some(field) = exif.get_field(tag, In::PRIMARY) {
-                    println!("{}: {}", field.tag, field.display_value().with_unit(&exif));
+                    println!("{}: {}", field.tag, field.display_value().with_unit(&exif))
                 }
             }
 
@@ -70,13 +70,13 @@ pub fn exif_reader() {
             // or LONG, `Value::get_uint` or `Value::iter_uint` can be used.
             if let Some(field) = exif.get_field(Tag::PixelXDimension, In::PRIMARY) {
                 if let Some(width) = field.value.get_uint(0) {
-                    println!("Valid width of the image is {}.", width);
+                    println!("Valid width of the image is {}.", width)
                 }
             }
 
             if let Some(field) = exif.get_field(Tag::PixelYDimension, In::PRIMARY) {
                 if let Some(height) = field.value.get_uint(0) {
-                    println!("Valid height of the image is {}.", height);
+                    println!("Valid height of the image is {}.", height)
                 }
             }
 
@@ -96,7 +96,7 @@ pub fn exif_reader() {
                 match field.value {
                     Value::Ascii(ref vec) if !vec.is_empty() => {
                         if let Ok(datetime) = DateTime::from_ascii(&vec[0]) {
-                            println!("Year of DateTime is {}.", datetime.year);
+                            println!("Year of DateTime is {}.", datetime.year)
                         }
                     }
                     _ => {}
