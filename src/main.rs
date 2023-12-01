@@ -1,3 +1,9 @@
+use crate::parser::exif_reader;
+// use std::env;
+// use crate::config::Config;
+// use crate::config::run;
+// use std::process;
+
 use crate::bank::Bank;
 use crate::calculator::get_sum_gen;
 use crate::closure::use_func;
@@ -180,9 +186,9 @@ fn main() {
     println!("Balance {}", bank.balance);
 
     let lit_x = 5;
-    let some_x: Option<i32> = Some(0);
+    // let some_x: Option<i32> = Some(0);
 
-    let result_some = lit_x + some_x.unwrap_or(0);
+    let result_some = lit_x;
     println!("Result of Option Addition {}", result_some);
 
     let hindi = "नमस्ते";
@@ -321,7 +327,7 @@ fn main() {
     println!("{:#?}", guess);
     println!("{}", guess.hit());
 
-    let color = RGB {
+    let color = Rgb {
         r: 255,
         g: 80,
         b: 100,
@@ -368,22 +374,24 @@ fn main() {
     let hello = String::from("안녕하세요");
 
     println!("{:?}", hello);
+
+    println!("{:?}", exif_reader());
 }
 
-struct RGB {
+struct Rgb {
     r: u8,
     g: u8,
     b: u8,
 }
 
-struct YUV {
+struct Yuv {
     y: f32,
     u: f32,
     v: f32,
 }
 
-impl RGB {
-    fn to_yuv(&self) -> YUV {
+impl Rgb {
+    fn to_yuv(&self) -> Yuv {
         let r = self.r as f32 / 255.0;
         let g = self.g as f32 / 255.0;
         let b = self.b as f32 / 255.0;
@@ -392,7 +400,7 @@ impl RGB {
         let u = -0.14713 * r - 0.288862 * g + 0.436 * b;
         let v = 0.615 * r - 0.51498 * g - 0.10001 * b;
 
-        YUV { y, u, v }
+        Yuv { y, u, v }
     }
 }
 

@@ -8,7 +8,7 @@ pub struct Guess {
 
 impl Guess {
     pub fn new(value: i32) -> Guess {
-        if value < 1 || value > 100 {
+        if !(1..=100).contains(&value) {
             panic!("Value should be between 1 and 100 got {}", value);
         }
 
@@ -23,9 +23,9 @@ impl Guess {
         let secret_number = rand::thread_rng().gen_range(1..101);
 
         match self.value.cmp(&secret_number) {
-            Ordering::Less => format!("Too small!"),
-            Ordering::Greater => format!("Too big!"),
-            Ordering::Equal => format!("You win!"),
+            Ordering::Less => "Too small!".to_string(),
+            Ordering::Greater => "Too big!".to_string(),
+            Ordering::Equal => "You win!".to_string(),
         }
     }
 }
