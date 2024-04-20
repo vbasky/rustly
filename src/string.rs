@@ -31,3 +31,12 @@ where
         y
     }
 }
+
+pub fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+
+pub fn dangle() -> String {
+    let s = String::from("hello");
+    s
+}

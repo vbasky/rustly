@@ -58,7 +58,7 @@ pub fn exif_reader() {
                 Tag::Model,
                 Tag::PixelXDimension,
                 Tag::PixelYDimension,
-                Tag::XResolution,				
+                Tag::XResolution,
             ];
             for tag in tag_list {
                 if let Some(field) = exif.get_field(tag, In::PRIMARY) {

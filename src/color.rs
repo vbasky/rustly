@@ -10,7 +10,11 @@ pub struct Yuv {
     v: f32,
 }
 
-pub impl Rgb {
+trait TraitName {
+    fn to_yuv(&self) -> Yuv;
+}
+
+impl TraitName for Rgb {
     fn to_yuv(&self) -> Yuv {
         let r = self.r as f32 / 255.0;
         let g = self.g as f32 / 255.0;
