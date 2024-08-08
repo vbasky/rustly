@@ -1,18 +1,17 @@
-use crate::parser::exif_reader;
 // use std::env;
 // use crate::config::Config;
 // use crate::config::run;
 // use std::process;
-
-use crate::bank::Bank;
-use crate::calculator::get_sum_gen;
+use crate::accounting::bank::Bank;
+use crate::accounting::calculator::get_sum_gen;
 use crate::closure::use_func;
 use crate::customer::Customer;
 use crate::day::Day;
 use crate::guess::Guess;
-use crate::math::Cacher;
 use crate::math::divide;
 use crate::math::largest;
+use crate::math::Cacher;
+use crate::parser::exif_reader;
 use crate::shape::Circle;
 use crate::shape::Point;
 use crate::shape::Rectangle;
@@ -20,9 +19,13 @@ use crate::shape::Shape;
 use crate::string::first_word;
 use crate::string::{longest, longest_with_an_announcement};
 use aggregator::{NewsArticle, Summary, Tweet};
+use cbor::cbor;
 use chrono::Local;
 use std::cmp::Ordering;
+use system::info;
+
 // use std::env;
+use mybox::MyBox;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::ErrorKind;
@@ -34,20 +37,23 @@ use std::time::Duration;
 use glob::glob;
 
 mod aggregator;
-mod bank;
-mod calculator;
+
+mod accounting;
+mod cbor;
 mod closure;
 mod config;
-pub mod customer;
+mod customer;
 mod day;
 mod file;
 mod guess;
 mod json;
 mod math;
+mod mybox;
 mod parser;
 mod random;
 mod shape;
 mod string;
+mod system;
 // mod traverse;
 
 #[allow(unused)]
@@ -67,8 +73,16 @@ fn main() {
     //     process::exit(1);
     // }
 
+    info::get_system_info();
+    cbor();
+
     let my_age = 18;
     let voting_age = 18;
+    let age_wrapper = MyBox::new(my_age);
+
+    assert_eq!(18, my_age);
+    assert_eq!(18, *age_wrapper);
+    println!("{:?}", *age_wrapper);
 
     let current_time = Local::now();
 
@@ -315,13 +329,13 @@ fn main() {
         None => println!("Unable to divide by 0"),
     }
 
-	let mut cached_result = Cacher::new(|num| {
-		println!("Printing cache");
-		thread::sleep(Duration::from_secs(2));
-		num
-	});
+    let mut cached_result = Cacher::new(|num| {
+        println!("Printing cache");
+        thread::sleep(Duration::from_secs(2));
+        num
+    });
 
-	cached_result.value(2);
+    cached_result.value(2);
 
     let guess = Guess::new(50);
     println!("{:#?}", guess);
