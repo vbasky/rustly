@@ -1,22 +1,15 @@
 use std::collections::HashMap;
 
-pub trait Transliterator {
-    // Associated function signature; `Self` refers to the implementor type.
-    fn new() -> Self;
-
-    fn transliterate(&self, input: &str) -> String;
-}
-
 pub struct IastToSlp1Transliterator {
     map: HashMap<&'static str, &'static str>,
 }
 
-// pub struct Slp1ToIastTransliterator {
-//     map: HashMap<&'static str, &'static str>,
-// }
+pub struct ISlp1ToIastTransliterator {
+    map: HashMap<&'static str, &'static str>,
+}
 
-impl Transliterator for IastToSlp1Transliterator {
-    fn transliterate(&self, input: &str) -> String {
+impl IastToSlp1Transliterator {
+    pub fn transliterate(&self, input: &str) -> String {
         let mut output = String::new();
 
         let mut i = 0;
@@ -46,15 +39,16 @@ impl Transliterator for IastToSlp1Transliterator {
 
         output
     }
-    fn new() -> IastToSlp1Transliterator {
+
+    pub fn new() -> IastToSlp1Transliterator {
         IastToSlp1Transliterator {
             map: create_iast_to_slp1_map(),
         }
     }
 }
 
-// impl Transliterator for Slp1ToIastTransliterator {
-    fn transliterate(&self, input: &str) -> String {
+impl ISlp1ToIastTransliterator {
+    pub fn transliterate(&self, input: &str) -> String {
         let mut output = String::new();
 
         let chars: Vec<char> = input.chars().collect();
@@ -85,8 +79,9 @@ impl Transliterator for IastToSlp1Transliterator {
 
         output
     }
-    fn new() -> Slp1ToIastTransliterator {
-        Slp1ToIastTransliterator {
+
+    pub fn new() -> ISlp1ToIastTransliterator {
+        ISlp1ToIastTransliterator {
             map: create_slp1_to_iast_map(),
         }
     }
@@ -107,8 +102,6 @@ fn create_iast_to_slp1_map() -> HashMap<&'static str, &'static str> {
     map.insert("o", "o");
     map.insert("ai", "E");
     map.insert("au", "O");
-
-    // Add mappings for consonants
     map.insert("k", "k");
     map.insert("kh", "K");
     map.insert("g", "g");

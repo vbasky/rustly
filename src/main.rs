@@ -27,7 +27,7 @@ use std::thread;
 use std::time::Duration;
 use system::info;
 use transformers::cbor::cbor;
-use transformers::transliterate::{IastToSlp1Transliterator, Slp1ToIastTransliterator};
+use transformers::transliterate::{ISlp1ToIastTransliterator, IastToSlp1Transliterator};
 
 mod accounting;
 mod article;
@@ -326,7 +326,7 @@ fn main() {
 
     let mut cached_result = Cacher::new(|num| {
         println!("Printing cache");
-        thread::sleep(Duration::from_secs(2));
+        // thread::sleep(Duration::from_secs(2));
         num
     });
 
@@ -392,7 +392,7 @@ fn main() {
     let iast_text = "jñātibhirvibhajyate naiva coreṇāpi na nīyate";
     let slp1_text = islptoiast.transliterate(iast_text);
     let slp2_text = "Arya Sfzga fziH";
-    let iast2_text = slptoiast.transliterate_slp1_to_iast(slp2_text);
+    let iast2_text = slptoiast.transliterate(slp2_text);
 
     println!("SLP1: {}", slp1_text);
     println!("IAST: {}", iast2_text);
