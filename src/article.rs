@@ -10,14 +10,14 @@ pub trait Summary {
     }
 }
 
-pub struct NewsArticle {
+pub struct Article {
     pub headline: String,
     pub location: String,
     pub author: String,
     pub content: String,
 }
 
-impl Summary for NewsArticle {
+impl Summary for Article {
     fn summarize_author(&self) -> String {
         format!("@{} by @{}", self.headline, self.author)
     }

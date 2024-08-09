@@ -1,60 +1,55 @@
-// use std::env;
-// use crate::config::Config;
-// use crate::config::run;
-// use std::process;
 use crate::accounting::bank::Bank;
 use crate::accounting::calculator::get_sum_gen;
+use crate::accounting::customer::Customer;
 use crate::closure::use_func;
-use crate::customer::Customer;
 use crate::day::Day;
 use crate::guess::Guess;
 use crate::math::divide;
 use crate::math::largest;
 use crate::math::Cacher;
-use crate::parser::exif_reader;
+use crate::metadata::parser::exif_reader;
 use crate::shape::Circle;
 use crate::shape::Point;
 use crate::shape::Rectangle;
 use crate::shape::Shape;
-use crate::string::first_word;
-use crate::string::{longest, longest_with_an_announcement};
-use aggregator::{NewsArticle, Summary, Tweet};
-use cbor::cbor;
-use chrono::Local;
-use std::cmp::Ordering;
-use system::info;
+use crate::transformers::string::first_word;
+use crate::transformers::string::{longest, longest_with_an_announcement};
 
-// use std::env;
+use article::{Article, Summary, Tweet};
+use chrono::Local;
+use glob::glob;
 use mybox::MyBox;
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::ErrorKind;
 use std::thread;
 use std::time::Duration;
-// use std::ops::Add;
-// use std::net::IpAddr;
-// use std::process;
-use glob::glob;
-
-mod aggregator;
+use system::info;
+use transformers::cbor::cbor;
+use transformers::transliterate::{IastToSlp1Transliterator, Slp1ToIastTransliterator};
 
 mod accounting;
-mod cbor;
+mod article;
 mod closure;
 mod config;
-mod customer;
 mod day;
 mod file;
 mod guess;
-mod json;
 mod math;
+mod metadata;
 mod mybox;
-mod parser;
 mod random;
 mod shape;
-mod string;
 mod system;
+mod transformers;
 // mod traverse;
+// use std::ops::Add;
+// use std::net::IpAddr;
+// use std::process;
+// use std::env;
+// use crate::config::Config;
+// use crate::config::run;
 
 #[allow(unused)]
 fn main() {
@@ -273,7 +268,7 @@ fn main() {
 
     println!("1 new tweet: {}", tweet.summarize());
 
-    let article = NewsArticle {
+    let article = Article {
         headline: String::from("Penguins win the Stanley Cup Championship!"),
         location: String::from("Pittsburgh, PA, USA"),
         author: String::from("Iceburgh"),
@@ -341,18 +336,18 @@ fn main() {
     println!("{:#?}", guess);
     println!("{}", guess.hit());
 
-    let color = Rgb {
-        r: 255,
-        g: 80,
-        b: 100,
-    };
-    let yuv = color.to_yuv();
-    println!("YUV: ({}, {}, {})", yuv.y, yuv.u, yuv.v);
+    // let color = transformers::color::Rgb {
+    //     r: 255,
+    //     g: 80,
+    //     b: 100,
+    // };
+    // let yuv = color.to_yuv();
+    // println!("YUV: ({}, {}, {})", yuv.y, yuv.u, yuv.v);
 
-    let iast = "namo nArAyaNA";
-    let slp1 = slp1_to_iast(iast);
-    println!("IAST: {}", iast);
-    println!("SLP1: {}", slp1);
+    // let iast = "namo nArAyaNA";
+    // let slp1 = slp1_to_iast(iast);
+    // println!("IAST: {}", iast);
+    // println!("SLP1: {}", slp1);
 
     // parser::exif_reader();
 
@@ -362,7 +357,7 @@ fn main() {
             Err(e) => println!("{:?}", e),
         }
     }
-    json::print_an_address().unwrap();
+    transformers::json::print_an_address().unwrap();
 
     let items: Vec<u64> = vec![0, 200, 1, 4];
     let mut count = 0;
@@ -390,61 +385,15 @@ fn main() {
     println!("{:?}", hello);
 
     println!("{:?}", exif_reader());
-}
 
-struct Rgb {
-    r: u8,
-    g: u8,
-    b: u8,
-}
+    let islptoiast = IastToSlp1Transliterator::new();
+    let slptoiast = ISlp1ToIastTransliterator::new();
 
-struct Yuv {
-    y: f32,
-    u: f32,
-    v: f32,
-}
+    let iast_text = "jñātibhirvibhajyate naiva coreṇāpi na nīyate";
+    let slp1_text = islptoiast.transliterate(iast_text);
+    let slp2_text = "Arya Sfzga fziH";
+    let iast2_text = slptoiast.transliterate_slp1_to_iast(slp2_text);
 
-impl Rgb {
-    fn to_yuv(&self) -> Yuv {
-        let r = self.r as f32 / 255.0;
-        let g = self.g as f32 / 255.0;
-        let b = self.b as f32 / 255.0;
-
-        let y = 0.299 * r + 0.587 * g + 0.114 * b;
-        let u = -0.14713 * r - 0.288862 * g + 0.436 * b;
-        let v = 0.615 * r - 0.51498 * g - 0.10001 * b;
-
-        Yuv { y, u, v }
-    }
-}
-
-fn slp1_to_iast(input: &str) -> String {
-    let map = [
-        ("a", "ā"),
-        ("A", "Ā"),
-        ("i", "ī"),
-        ("I", "Ī"),
-        ("u", "ū"),
-        ("U", "Ū"),
-        ("f", "ḥ"),
-        ("x", "ñ"),
-        ("e", "ē"),
-        ("E", "Ē"),
-        ("o", "ō"),
-        ("O", "Ō"),
-    ];
-    let mut transliteration_map = HashMap::new();
-    for &(slp1, iast) in map.iter() {
-        transliteration_map.insert(slp1, iast);
-    }
-
-    let mut result = String::new();
-    for character in input.chars() {
-        if let Some(iast_char) = transliteration_map.get(&character.to_string() as &str) {
-            result.push_str(iast_char);
-        } else {
-            result.push(character);
-        }
-    }
-    result
+    println!("SLP1: {}", slp1_text);
+    println!("IAST: {}", iast2_text);
 }

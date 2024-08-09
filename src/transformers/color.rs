@@ -1,7 +1,7 @@
 pub struct Rgb {
-    r: u8,
-    g: u8,
-    b: u8,
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
 }
 
 pub struct Yuv {
@@ -10,11 +10,11 @@ pub struct Yuv {
     v: f32,
 }
 
-trait TraitName {
+trait Color {
     fn to_yuv(&self) -> Yuv;
 }
 
-impl TraitName for Rgb {
+impl Color for Rgb {
     fn to_yuv(&self) -> Yuv {
         let r = self.r as f32 / 255.0;
         let g = self.g as f32 / 255.0;
