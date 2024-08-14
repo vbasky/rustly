@@ -2,7 +2,7 @@ pub fn factorial(num: u128) -> u128 {
     (1..=num).product()
 }
 
-pub fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
+pub fn largest<T: PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
 
     for item in list {

@@ -15,6 +15,7 @@ use crate::shape::Shape;
 use crate::transformers::string::first_word;
 use crate::transformers::string::{longest, longest_with_an_announcement};
 
+use crate::transformers::transliterate::Transliterate;
 use article::{Article, Summary, Tweet};
 use chrono::Local;
 use glob::glob;
@@ -27,7 +28,8 @@ use std::thread;
 use std::time::Duration;
 use system::info;
 use transformers::cbor::cbor;
-use transformers::transliterate::{ISlp1ToIastTransliterator, IastToSlp1Transliterator};
+use transformers::string::heart;
+use transformers::transliterate::{ISlp1ToIastTransliterate, IastToSlp1Transliterate};
 
 mod accounting;
 mod article;
@@ -46,27 +48,32 @@ mod transformers;
 // mod traverse;
 // use std::ops::Add;
 // use std::net::IpAddr;
-// use std::process;
-// use std::env;
-// use crate::config::Config;
-// use crate::config::run;
+use crate::config::run;
+use crate::config::Config;
+use std::env;
+use std::process;
 
-#[allow(unused)]
+#[allow(unused_variables)]
 fn main() {
+    // println!("Please enter an option");
+    // println!("1: System Info");
+    // println!("2: CBOR Data");
+    // println!("3: Math functions");
     // random::guess_random_number();
-    // let args: Vec<String> = env::args().collect();
-    // let config = Config::build(&args).unwrap_or_else(|err| {
-    //     println!("Problem parsing arguments: {err}");
-    //     process::exit(1)
-    // });
+    let config = Config::build(env::args()).unwrap_or_else(|err| {
+        println!("Didnt enter any option: {err}");
+        process::exit(1)
+    });
 
-    // println!("Searching for {}", config.query);
-    // println!("In file {}", config.file_path);
+    // println!("searching for {}", config.query);
+    // println!("in file {}", config.filename);
 
-    // if let Err(e) = run(config) {
-    //     println!("Application error : {e}");
-    //     process::exit(1);
+    // if let err(e) = run(config) {
+    //    println!("application error : {e}");
+    //    process::exit(1);
     // }
+
+    println!("Rust is {:?}", heart());
 
     info::get_system_info();
     cbor();
@@ -225,18 +232,15 @@ fn main() {
 
     let greeting_file_result = File::open("hello.txt");
 
-    let greeting_file = match greeting_file_result {
-        Ok(file) => file,
-        Err(error) => match error.kind() {
-            ErrorKind::NotFound => match File::create("hello.txt") {
-                Ok(fc) => fc,
-                Err(e) => panic!("Problem creating the file: {:?}", e),
-            },
-            other_error => {
-                panic!("Problem opening the file: {:?}", other_error);
-            }
+    let greeting_file = greeting_file_result.unwrap_or_else(|error| match error.kind() {
+        ErrorKind::NotFound => match File::create("hello.txt") {
+            Ok(fc) => fc,
+            Err(e) => panic!("Problem creating the file: {:?}", e),
         },
-    };
+        other_error => {
+            panic!("Problem opening the file: {:?}", other_error);
+        }
+    });
 
     let file = String::from("hello.txt");
 
@@ -311,7 +315,7 @@ fn main() {
 
     println!("First word is {}", word);
 
-    let mut i = 10;
+    let i = 10;
 
     for i in [2, 1] {
         println!("{}", i);
@@ -386,14 +390,14 @@ fn main() {
 
     println!("{:?}", exif_reader());
 
-    let islptoiast = IastToSlp1Transliterator::new();
-    let slptoiast = ISlp1ToIastTransliterator::new();
+    let islptoiast = IastToSlp1Transliterate::new();
+    let slptoiast = ISlp1ToIastTransliterate::new();
 
     let iast_text = "jñātibhirvibhajyate naiva coreṇāpi na nīyate";
     let slp1_text = islptoiast.transliterate(iast_text);
     let slp2_text = "Arya Sfzga fziH";
     let iast2_text = slptoiast.transliterate(slp2_text);
 
-    println!("SLP1: {}", slp1_text);
-    println!("IAST: {}", iast2_text);
+    println!("SLP1: {:?}", slp1_text);
+    println!("IAST: {:?}", iast2_text);
 }

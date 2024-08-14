@@ -1,19 +1,35 @@
 use std::collections::HashMap;
 
-pub struct IastToSlp1Transliterator {
+pub struct IastToSlp1Transliterate {
     map: HashMap<&'static str, &'static str>,
 }
 
-pub struct ISlp1ToIastTransliterator {
+pub struct ISlp1ToIastTransliterate {
     map: HashMap<&'static str, &'static str>,
 }
 
-impl IastToSlp1Transliterator {
-    pub fn transliterate(&self, input: &str) -> String {
+pub trait Transliterate {
+    fn new() -> Self;
+    fn transliterate(&self, input: &str);
+    fn generate_output(&self, output: &mut String, i: usize, chars: Vec<char>);
+}
+
+impl Transliterate for IastToSlp1Transliterate {
+    fn new() -> IastToSlp1Transliterate {
+        IastToSlp1Transliterate {
+            map: create_iast_to_slp1_map(),
+        }
+    }
+
+    fn transliterate(&self, input: &str) {
         let mut output = String::new();
 
-        let mut i = 0;
+        let i = 0;
         let chars: Vec<char> = input.chars().collect();
+        self.generate_output(&mut output, i, chars);
+    }
+
+    fn generate_output(&self, output: &mut String, mut i: usize, chars: Vec<char>) {
         while i < chars.len() {
             let mut found = false;
 
@@ -36,28 +52,29 @@ impl IastToSlp1Transliterator {
                 i += 1;
             }
         }
-
-        output
-    }
-
-    pub fn new() -> IastToSlp1Transliterator {
-        IastToSlp1Transliterator {
-            map: create_iast_to_slp1_map(),
-        }
     }
 }
 
-impl ISlp1ToIastTransliterator {
-    pub fn transliterate(&self, input: &str) -> String {
+impl Transliterate for ISlp1ToIastTransliterate {
+    fn new() -> ISlp1ToIastTransliterate {
+        ISlp1ToIastTransliterate {
+            map: create_slp1_to_iast_map(),
+        }
+    }
+
+    fn transliterate(&self, input: &str) {
         let mut output = String::new();
 
+        let i = 0;
         let chars: Vec<char> = input.chars().collect();
-        let mut i = 0;
+        self.generate_output(&mut output, i, chars);
+    }
 
+    fn generate_output(&self, output: &mut String, mut i: usize, chars: Vec<char>) {
         while i < chars.len() {
             let mut found = false;
 
-            // Try to match sequences of length 2 first
+            // Try to match sequences of length 2 or more first
             for len in (1..=2).rev() {
                 if i + len <= chars.len() {
                     let slice: String = chars[i..i + len].iter().collect();
@@ -75,14 +92,6 @@ impl ISlp1ToIastTransliterator {
                 output.push(chars[i]);
                 i += 1;
             }
-        }
-
-        output
-    }
-
-    pub fn new() -> ISlp1ToIastTransliterator {
-        ISlp1ToIastTransliterator {
-            map: create_slp1_to_iast_map(),
         }
     }
 }
