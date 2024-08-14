@@ -17,10 +17,19 @@ pub fn get_system_info() {
     println!("used swap   : {} bytes", sys.used_swap());
 
     // Display system information:
-    println!("System name:             {:?}", System::name());
-    println!("System kernel version:   {:?}", System::kernel_version());
-    println!("System OS version:       {:?}", System::os_version());
-    println!("System host name:        {:?}", System::host_name());
+    println!("System name:             {:?}", System::name().unwrap());
+    println!(
+        "System kernel version:   {:?}",
+        System::kernel_version().unwrap()
+    );
+    println!(
+        "System OS version:       {:?}",
+        System::os_version().unwrap()
+    );
+    println!(
+        "System host name:        {:?}",
+        System::host_name().unwrap()
+    );
 
     // Number of CPUs:
     println!("NB CPUs: {}", sys.cpus().len());
