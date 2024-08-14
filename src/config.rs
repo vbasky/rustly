@@ -1,6 +1,15 @@
-use std::env;
 use std::error::Error;
 use std::fs;
+use std::{env, vec};
+
+pub trait Configure {
+    fn build(args: std::env::Args) -> Result<Self, &'static str>
+    where
+        Self: Sized;
+    fn run(&self) -> Result<(), Box<dyn Error>>;
+    fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>;
+    fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str>;
+}
 
 pub struct Config {
     pub query: String,
@@ -8,8 +17,8 @@ pub struct Config {
     pub ignore_case: bool,
 }
 
-impl Config {
-    pub fn build(mut args: std::env::Args) -> Result<Config, &'static str> {
+impl Configure for Config {
+    fn build(mut args: std::env::Args) -> Result<Config, &'static str> {
         args.next();
 
         let query = match args.next() {
@@ -30,43 +39,47 @@ impl Config {
             ignore_case,
         })
     }
-}
 
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents =
-        fs::read_to_string(config.filename).expect("Should have been able to read the file");
+    fn run(&self) -> Result<(), Box<dyn Error>> {
+        let contents =
+            fs::read_to_string(&self.filename).expect("Should have been able to read the file");
 
-    let results = if config.ignore_case {
-        search_case_insensitive(&config.query, &contents)
-    } else {
-        search(&config.query, &contents)
-    };
+        let results = if self.ignore_case {
+            Config::search_case_insensitive(&self.query, &contents)
+        } else {
+            Config::search(&self.query, &contents)
+        };
 
-    for line in results {
-        println!("{line}");
-    }
-
-    Ok(())
-}
-
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    contents
-        .lines()
-        .filter(|line| line.contains(query))
-        .collect()
-}
-
-pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
-    let query = query.to_lowercase();
-
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&query) {
-            results.push(line);
+        if vec![""].eq(&results) {
+            println!("No results found for query: {}", self.query);
         }
+
+        for line in results {
+            println!("{line}");
+        }
+
+        Ok(())
     }
 
-    results
+    fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        contents
+            .lines()
+            .filter(|line| line.contains(query))
+            .collect()
+    }
+
+    fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+        let mut results = Vec::new();
+        let query = query.to_lowercase();
+
+        for line in contents.lines() {
+            if line.to_lowercase().contains(&query) {
+                results.push(line);
+            }
+        }
+
+        results
+    }
 }
 
 #[cfg(test)]
@@ -82,7 +95,10 @@ safe, fast, productive.
 Pick three.
 Duct tape.";
 
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+        assert_eq!(
+            vec!["safe, fast, productive."],
+            Config::search(query, contents)
+        );
     }
 
     #[test]
@@ -96,7 +112,7 @@ Trust me.";
 
         assert_eq!(
             vec!["Rust:", "Trust me."],
-            search_case_insensitive(query, contents)
+            Config::search_case_insensitive(query, contents)
         );
     }
 }

@@ -18,6 +18,8 @@ use crate::transformers::string::{longest, longest_with_an_announcement};
 use crate::transformers::transliterate::Transliterate;
 use article::{Article, Summary, Tweet};
 use chrono::Local;
+use config::Config;
+use config::Configure;
 use glob::glob;
 use mybox::MyBox;
 use std::cmp::Ordering;
@@ -48,356 +50,377 @@ mod transformers;
 // mod traverse;
 // use std::ops::Add;
 // use std::net::IpAddr;
-use crate::config::run;
-use crate::config::Config;
-use std::env;
 use std::process;
 
 #[allow(unused_variables)]
 fn main() {
-    // println!("Please enter an option");
-    // println!("1: System Info");
-    // println!("2: CBOR Data");
-    // println!("3: Math functions");
+    println!("Please enter an option");
+    println!("1: System Info");
+    println!("2: CBOR Data");
+    println!("3: Math functions");
+    println!("------------------");
+
+    let mut line = String::new();
+    std::io::stdin()
+        .read_line(&mut line)
+        .expect("Failed to read option");
+
+    let option = line.trim().parse::<u32>().unwrap();
+
+    match option {
+        1 => info::get_system_info(),
+        2 => cbor(),
+        3 => {
+            let vec2 = vec![6, 7, 8, 9, 10];
+            println!("Largest vector is {:?}", math::largest(&vec2));
+        }
+        _ => println!("Invalid option"),
+    }
+
+    process::exit(1);
+
     // random::guess_random_number();
-    let config = Config::build(env::args()).unwrap_or_else(|err| {
-        println!("Didnt enter any option: {err}");
-        process::exit(1)
-    });
+    // let config = Config::build(env::args()).unwrap_or_else(|err| {
+    //     println!("Didnt enter any option: {err}");
+    //     process::exit(1)
+    // });
 
-    // println!("searching for {}", config.query);
-    // println!("in file {}", config.filename);
+    // let result = Config::run(&self::Config {
+    //     query: config.query,
+    //     filename: config.filename,
+    //     ignore_case: config.ignore_case,
+    // });
 
-    // if let err(e) = run(config) {
-    //    println!("application error : {e}");
-    //    process::exit(1);
+    // if let Err(e) = result {
+    //     println!("Application error: {e}");
+    //     process::exit(1);
     // }
 
-    println!("Rust is {:?}", heart());
+    // println!("Rust is {:?}", heart());
 
-    info::get_system_info();
-    cbor();
+    // info::get_system_info();
+    // cbor();
 
-    let my_age = 18;
-    let voting_age = 18;
-    let age_wrapper = MyBox::new(my_age);
+    // let my_age = 18;
+    // let voting_age = 18;
+    // let age_wrapper = MyBox::new(my_age);
 
-    assert_eq!(18, my_age);
-    assert_eq!(18, *age_wrapper);
-    println!("{:?}", *age_wrapper);
+    // assert_eq!(18, my_age);
+    // assert_eq!(18, *age_wrapper);
+    // println!("{:?}", *age_wrapper);
 
-    let current_time = Local::now();
+    // let current_time = Local::now();
 
-    println!("Day is {}", current_time.date_naive());
+    // println!("Day is {}", current_time.date_naive());
 
-    println!("u64 max is {}", u64::MAX);
+    // println!("u64 max is {}", u64::MAX);
 
-    let factorial_result: u128 = math::factorial(30);
+    // let factorial_result: u128 = math::factorial(30);
 
-    println!("Factorial is {}", factorial_result);
+    // println!("Factorial is {}", factorial_result);
 
-    // println!("Random number {}", rand::thread_rng().gen_range(1..101));
+    // // println!("Random number {}", rand::thread_rng().gen_range(1..101));
 
-    match my_age.cmp(&voting_age) {
-        Ordering::Less => println!("Cant vote"),
-        Ordering::Greater => println!("Can vote"),
-        Ordering::Equal => println!("Wohoo you've earned the right"),
-    }
+    // match my_age.cmp(&voting_age) {
+    //     Ordering::Less => println!("Cant vote"),
+    //     Ordering::Greater => println!("Can vote"),
+    //     Ordering::Equal => println!("Wohoo you've earned the right"),
+    // }
 
-    let random = String::from("Random String");
-    let words = String::from("Multiple");
+    // let random = String::from("Random String");
+    // let words = String::from("Multiple");
 
-    let result = random + &words;
-    for char in result.bytes() {
-        print!("{} ", char);
-    }
+    // let result = random + &words;
+    // for char in result.bytes() {
+    //     print!("{} ", char);
+    // }
 
-    println!();
-    println!("Printing chars");
-    let st3 = String::from("a n s i y p a");
-    let mut v1: Vec<char> = st3.chars().collect();
-    v1.sort();
-    v1.dedup();
+    // println!();
+    // println!("Printing chars");
+    // let st3 = String::from("a n s i y p a");
+    // let mut v1: Vec<char> = st3.chars().collect();
+    // v1.sort();
+    // v1.dedup();
 
-    for char in v1 {
-        print!("{} ", char);
-    }
+    // for char in v1 {
+    //     print!("{} ", char);
+    // }
 
-    let today = Day::Monday;
-    match today {
-        Day::Monday => println!("Everyone hates Monday"),
-        _ => println!("Better"),
-    }
+    // let today = Day::Monday;
+    // match today {
+    //     Day::Monday => println!("Everyone hates Monday"),
+    //     _ => println!("Better"),
+    // }
 
-    println!("Is today weekend {}", today.is_weekend());
+    // println!("Is today weekend {}", today.is_weekend());
 
-    let _vec1: Vec<i32> = Vec::new();
-    let mut vec2: Vec<i32> = vec![1, 2, 3, 4, 5];
-    vec2.push(6);
+    // let _vec1: Vec<i32> = Vec::new();
+    // let mut vec2: Vec<i32> = vec![1, 2, 3, 4, 5];
+    // vec2.push(6);
 
-    let _second = &vec2[1];
+    // let _second = &vec2[1];
 
-    match vec2.get(1) {
-        Some(_second) => println!(),
-        None => println!("No 2nd value"),
-    }
+    // match vec2.get(1) {
+    //     Some(_second) => println!(),
+    //     None => println!("No 2nd value"),
+    // }
 
-    for i in &mut vec2 {
-        *i *= 2;
-    }
+    // for i in &mut vec2 {
+    //     *i *= 2;
+    // }
 
-    for i in &vec2 {
-        println!("{}", i);
-    }
+    // for i in &vec2 {
+    //     println!("{}", i);
+    // }
 
-    println!("Vector 2 {:?}", vec2.pop());
+    // println!("Vector 2 {:?}", vec2.pop());
 
-    println!("5.2 + 4.6 = {}", get_sum_gen(5.2, 4.6));
+    // println!("5.2 + 4.6 = {}", get_sum_gen(5.2, 4.6));
 
-    let mut heros = HashMap::new();
-    heros.insert("Superman", "Clark Kent");
-    heros.insert("Batman", "Bruce Wayne");
+    // let mut heros = HashMap::new();
+    // heros.insert("Superman", "Clark Kent");
+    // heros.insert("Batman", "Bruce Wayne");
 
-    if heros.contains_key(&"Batman") {
-        let the_batman = heros.get(&"Batman");
-        match the_batman {
-            Some(_) => println!("Batman is a hero"),
-            None => println!("Batman is not a hero"),
-        }
-    }
+    // if heros.contains_key(&"Batman") {
+    //     let the_batman = heros.get(&"Batman");
+    //     match the_batman {
+    //         Some(_) => println!("Batman is a hero"),
+    //         None => println!("Batman is not a hero"),
+    //     }
+    // }
 
-    for (k, v) in heros.iter() {
-        println!("{} = {}", k, v);
-    }
+    // for (k, v) in heros.iter() {
+    //     println!("{} = {}", k, v);
+    // }
 
-    let bob = Customer {
-        name: String::from("Bob Smith"),
-        address: String::from("Corldon Ave"),
-        balance: 34.50,
-    };
-
-    println!("Customer is {:#?}", bob);
-    println!("{}", bob.welcome());
-
-    let _rectangle = Rectangle {
-        width: 10.0,
-        height: 4.2,
-    };
-
-    let rectangle: Rectangle = Shape::new(10.0, 2.3);
-    let circle: Circle = Shape::new(12.2, 2.4);
-
-    println!("The Rect is {:#?}", _rectangle);
-    println!("Rect area is {}", rectangle.area());
-    println!("Circle area is  {}", circle.area());
-
-    let sum = |a: i32, b: i32| a + b;
-    let prod = |a: i32, b: i32| a * b;
-
-    println!("Sum {}", use_func(5, 4, sum));
-    println!("Prod {} ", use_func(5, 8, prod));
-
-    let mut bank = Bank::new(50.0);
-    bank.withdraw(20.0);
-    println!("Balance {}", bank.balance);
-
-    let lit_x = 5;
-    // let some_x: Option<i32> = Some(0);
-
-    let result_some = lit_x;
-    println!("Result of Option Addition {}", result_some);
-
-    let hindi = "नमस्ते";
-    for c in hindi.chars() {
-        println!("{c}");
-    }
-
-    let mut map = HashMap::new();
-    let field_name = String::from("Favorite color");
-    let field_value = String::from("Blue");
-    map.insert(field_name, field_value);
-
-    println!("{:?}", map);
-
-    let text = "hello world wonderful world";
-
-    let mut map = HashMap::new();
-
-    for word in text.split_whitespace() {
-        let count = map.entry(word).or_insert(0);
-        *count += 1;
-    }
-
-    println!("{:?}", map);
-
-    let greeting_file_result = File::open("hello.txt");
-
-    let greeting_file = greeting_file_result.unwrap_or_else(|error| match error.kind() {
-        ErrorKind::NotFound => match File::create("hello.txt") {
-            Ok(fc) => fc,
-            Err(e) => panic!("Problem creating the file: {:?}", e),
-        },
-        other_error => {
-            panic!("Problem opening the file: {:?}", other_error);
-        }
-    });
-
-    let file = String::from("hello.txt");
-
-    let read_from_file = file::read_username_from_file(file).unwrap();
-    println!("Read username is {:?}", read_from_file);
-
-    println!("Largest is {}", math::largest(&vec2));
-
-    let number_list = vec![10, 20, 13, 6, 8, 100];
-    let char_list = vec!['a', 'b', 'y', 'x'];
-
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
-
-    let result = largest(&char_list);
-    println!("The largest character is {}", result);
-
-    let p = Point { x: 10.0, y: 15.2 };
-
-    println!("p.x = {}", p.x());
-    println!("p distance = {}", p.distance_from_origin());
-
-    let tweet = Tweet {
-        username: String::from("horse_ebooks"),
-        content: String::from("of course, as you probably already know, people"),
-        reply: false,
-        retweet: false,
-    };
-
-    println!("1 new tweet: {}", tweet.summarize());
-
-    let article = Article {
-        headline: String::from("Penguins win the Stanley Cup Championship!"),
-        location: String::from("Pittsburgh, PA, USA"),
-        author: String::from("Iceburgh"),
-        content: String::from(
-            "The Pittsburgh Penguins once again are the best \
-             hockey team in the NHL.",
-        ),
-    };
-
-    println!("New article available! {}", article.summarize());
-
-    let string1 = String::from("Longer String");
-
-    {
-        let string2 = String::from("Short");
-        let result = longest(string1.as_str(), string2.as_str());
-        println!("The longest string is {}", result);
-
-        let result_announcement =
-            longest_with_an_announcement(string1.as_str(), string2.as_str(), "Important");
-        println!("{}", result_announcement);
-    }
-
-    struct ImportantExcerpt<'a> {
-        part: &'a str,
-    }
-
-    let novel = String::from("Call me Ishmael. Some years ago...");
-    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
-    let i = ImportantExcerpt {
-        part: first_sentence,
-    };
-
-    let number: f64 = 1.0;
-    let width: usize = 5;
-    println!("{number:>width$}");
-
-    let invocation = String::from("hello world");
-    let word = first_word(&invocation);
-
-    println!("First word is {}", word);
-
-    let i = 10;
-
-    for i in [2, 1] {
-        println!("{}", i);
-    }
-
-    let result = divide(2.0, 3.0);
-
-    match result {
-        Some(result) => println!("Result is {:?}", result),
-        None => println!("Unable to divide by 0"),
-    }
-
-    let mut cached_result = Cacher::new(|num| {
-        println!("Printing cache");
-        // thread::sleep(Duration::from_secs(2));
-        num
-    });
-
-    cached_result.value(2);
-
-    let guess = Guess::new(50);
-    println!("{:#?}", guess);
-    println!("{}", guess.hit());
-
-    // let color = transformers::color::Rgb {
-    //     r: 255,
-    //     g: 80,
-    //     b: 100,
+    // let bob = Customer {
+    //     name: String::from("Bob Smith"),
+    //     address: String::from("Corldon Ave"),
+    //     balance: 34.50,
     // };
-    // let yuv = color.to_yuv();
-    // println!("YUV: ({}, {}, {})", yuv.y, yuv.u, yuv.v);
 
-    // let iast = "namo nArAyaNA";
-    // let slp1 = slp1_to_iast(iast);
-    // println!("IAST: {}", iast);
-    // println!("SLP1: {}", slp1);
+    // println!("Customer is {:#?}", bob);
+    // println!("{}", bob.welcome());
 
-    // parser::exif_reader();
+    // let _rectangle = Rectangle {
+    //     width: 10.0,
+    //     height: 4.2,
+    // };
 
-    for entry in glob("images/*.jpg").expect("Failed to read glob pattern") {
-        match entry {
-            Ok(path) => println!("{:?}", path.display()),
-            Err(e) => println!("{:?}", e),
-        }
-    }
-    transformers::json::print_an_address().unwrap();
+    // let rectangle: Rectangle = Shape::new(10.0, 2.3);
+    // let circle: Circle = Shape::new(12.2, 2.4);
 
-    let items: Vec<u64> = vec![0, 200, 1, 4];
-    let mut count = 0;
-    let vec = items
-        .iter()
-        .inspect(|_| count += 1)
-        .filter(|&i| i % 2 == 0)
-        .collect::<Vec<_>>();
-    println!("count:{count} vec:{vec:?}");
+    // println!("The Rect is {:#?}", _rectangle);
+    // println!("Rect area is {}", rectangle.area());
+    // println!("Circle area is  {}", circle.area());
 
-    let hello = String::from("السلام عليكم");
-    println!("{:?}", hello);
+    // let sum = |a: i32, b: i32| a + b;
+    // let prod = |a: i32, b: i32| a * b;
 
-    let hello = "नमस्ते";
-    for i in hello.bytes() {
-        println!("{i}");
-    }
+    // println!("Sum {}", use_func(5, 4, sum));
+    // println!("Prod {} ", use_func(5, 8, prod));
 
-    let hello = String::from("Здравствуйте");
+    // let mut bank = Bank::new(50.0);
+    // bank.withdraw(20.0);
+    // println!("Balance {}", bank.balance);
 
-    println!("{:?}", hello);
+    // let lit_x = 5;
+    // // let some_x: Option<i32> = Some(0);
 
-    let hello = String::from("안녕하세요");
+    // let result_some = lit_x;
+    // println!("Result of Option Addition {}", result_some);
 
-    println!("{:?}", hello);
+    // let hindi = "नमस्ते";
+    // for c in hindi.chars() {
+    //     println!("{c}");
+    // }
 
-    println!("{:?}", exif_reader());
+    // let mut map = HashMap::new();
+    // let field_name = String::from("Favorite color");
+    // let field_value = String::from("Blue");
+    // map.insert(field_name, field_value);
 
-    let islptoiast = IastToSlp1Transliterate::new();
-    let slptoiast = ISlp1ToIastTransliterate::new();
+    // println!("{:?}", map);
 
-    let iast_text = "jñātibhirvibhajyate naiva coreṇāpi na nīyate";
-    let slp1_text = islptoiast.transliterate(iast_text);
-    let slp2_text = "Arya Sfzga fziH";
-    let iast2_text = slptoiast.transliterate(slp2_text);
+    // let text = "hello world wonderful world";
 
-    println!("SLP1: {:?}", slp1_text);
-    println!("IAST: {:?}", iast2_text);
+    // let mut map = HashMap::new();
+
+    // for word in text.split_whitespace() {
+    //     let count = map.entry(word).or_insert(0);
+    //     *count += 1;
+    // }
+
+    // println!("{:?}", map);
+
+    // let greeting_file_result = File::open("hello.txt");
+
+    // let greeting_file = greeting_file_result.unwrap_or_else(|error| match error.kind() {
+    //     ErrorKind::NotFound => match File::create("hello.txt") {
+    //         Ok(fc) => fc,
+    //         Err(e) => panic!("Problem creating the file: {:?}", e),
+    //     },
+    //     other_error => {
+    //         panic!("Problem opening the file: {:?}", other_error);
+    //     }
+    // });
+
+    // let file = String::from("hello.txt");
+
+    // let read_from_file = file::read_username_from_file(file).unwrap();
+    // println!("Read username is {:?}", read_from_file);
+
+    // println!("Largest is {}", math::largest(&vec2));
+
+    // let number_list = vec![10, 20, 13, 6, 8, 100];
+    // let char_list = vec!['a', 'b', 'y', 'x'];
+
+    // let result = largest(&number_list);
+    // println!("The largest number is {}", result);
+
+    // let result = largest(&char_list);
+    // println!("The largest character is {}", result);
+
+    // let p = Point { x: 10.0, y: 15.2 };
+
+    // println!("p.x = {}", p.x());
+    // println!("p distance = {}", p.distance_from_origin());
+
+    // let tweet = Tweet {
+    //     username: String::from("horse_ebooks"),
+    //     content: String::from("of course, as you probably already know, people"),
+    //     reply: false,
+    //     retweet: false,
+    // };
+
+    // println!("1 new tweet: {}", tweet.summarize());
+
+    // let article = Article {
+    //     headline: String::from("Penguins win the Stanley Cup Championship!"),
+    //     location: String::from("Pittsburgh, PA, USA"),
+    //     author: String::from("Iceburgh"),
+    //     content: String::from(
+    //         "The Pittsburgh Penguins once again are the best \
+    //          hockey team in the NHL.",
+    //     ),
+    // };
+
+    // println!("New article available! {}", article.summarize());
+
+    // let string1 = String::from("Longer String");
+
+    // {
+    //     let string2 = String::from("Short");
+    //     let result = longest(string1.as_str(), string2.as_str());
+    //     println!("The longest string is {}", result);
+
+    //     let result_announcement =
+    //         longest_with_an_announcement(string1.as_str(), string2.as_str(), "Important");
+    //     println!("{}", result_announcement);
+    // }
+
+    // struct ImportantExcerpt<'a> {
+    //     part: &'a str,
+    // }
+
+    // let novel = String::from("Call me Ishmael. Some years ago...");
+    // let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    // let i = ImportantExcerpt {
+    //     part: first_sentence,
+    // };
+
+    // let number: f64 = 1.0;
+    // let width: usize = 5;
+    // println!("{number:>width$}");
+
+    // let invocation = String::from("hello world");
+    // let word = first_word(&invocation);
+
+    // println!("First word is {}", word);
+
+    // let i = 10;
+
+    // for i in [2, 1] {
+    //     println!("{}", i);
+    // }
+
+    // let result = divide(2.0, 3.0);
+
+    // match result {
+    //     Some(result) => println!("Result is {:?}", result),
+    //     None => println!("Unable to divide by 0"),
+    // }
+
+    // let mut cached_result = Cacher::new(|num| {
+    //     println!("Printing cache");
+    //     // thread::sleep(Duration::from_secs(2));
+    //     num
+    // });
+
+    // cached_result.value(2);
+
+    // let guess = Guess::new(50);
+    // println!("{:#?}", guess);
+    // println!("{}", guess.hit());
+
+    // // let color = transformers::color::Rgb {
+    // //     r: 255,
+    // //     g: 80,
+    // //     b: 100,
+    // // };
+    // // let yuv = color.to_yuv();
+    // // println!("YUV: ({}, {}, {})", yuv.y, yuv.u, yuv.v);
+
+    // // let iast = "namo nArAyaNA";
+    // // let slp1 = slp1_to_iast(iast);
+    // // println!("IAST: {}", iast);
+    // // println!("SLP1: {}", slp1);
+
+    // // parser::exif_reader();
+
+    // for entry in glob("images/*.jpg").expect("Failed to read glob pattern") {
+    //     match entry {
+    //         Ok(path) => println!("{:?}", path.display()),
+    //         Err(e) => println!("{:?}", e),
+    //     }
+    // }
+    // transformers::json::print_an_address().unwrap();
+
+    // let items: Vec<u64> = vec![0, 200, 1, 4];
+    // let mut count = 0;
+    // let vec = items
+    //     .iter()
+    //     .inspect(|_| count += 1)
+    //     .filter(|&i| i % 2 == 0)
+    //     .collect::<Vec<_>>();
+    // println!("count:{count} vec:{vec:?}");
+
+    // let hello = String::from("السلام عليكم");
+    // println!("{:?}", hello);
+
+    // let hello = "नमस्ते";
+    // for i in hello.bytes() {
+    //     println!("{i}");
+    // }
+
+    // let hello = String::from("Здравствуйте");
+
+    // println!("{:?}", hello);
+
+    // let hello = String::from("안녕하세요");
+
+    // println!("{:?}", hello);
+
+    // println!("{:?}", exif_reader());
+
+    // let islptoiast = IastToSlp1Transliterate::new();
+    // let slptoiast = ISlp1ToIastTransliterate::new();
+
+    // let iast_text = "jñātibhirvibhajyate naiva coreṇāpi na nīyate";
+    // let slp1_text = islptoiast.transliterate(iast_text);
+    // let slp2_text = "Arya Sfzga fziH";
+    // let iast2_text = slptoiast.transliterate(slp2_text);
+
+    // println!("SLP1: {:?}", slp1_text);
+    // println!("IAST: {:?}", iast2_text);
 }
