@@ -21,6 +21,7 @@ use chrono::Local;
 use config::Config;
 use config::Configure;
 use glob::glob;
+use input::Input;
 use mybox::MyBox;
 use std::cmp::Ordering;
 use std::collections::HashMap;
@@ -40,6 +41,7 @@ mod config;
 mod day;
 mod file;
 mod guess;
+mod input;
 mod math;
 mod metadata;
 mod mybox;
@@ -54,30 +56,7 @@ use std::process;
 
 #[allow(unused_variables)]
 fn main() {
-    println!("Please enter an option");
-    println!("1: System Info");
-    println!("2: CBOR Data");
-    println!("3: Math functions");
-    println!("------------------");
-
-    let mut line = String::new();
-    std::io::stdin()
-        .read_line(&mut line)
-        .expect("Failed to read option");
-
-    let option = line.trim().parse::<u32>().unwrap();
-
-    match option {
-        1 => info::get_system_info(),
-        2 => cbor(),
-        3 => {
-            let vec2 = vec![6, 7, 8, 9, 10];
-            println!("Largest vector is {:?}", math::largest(&vec2));
-        }
-        _ => println!("Invalid option"),
-    }
-
-    process::exit(1);
+    Input::new().compute();
 
     // random::guess_random_number();
     // let config = Config::build(env::args()).unwrap_or_else(|err| {
