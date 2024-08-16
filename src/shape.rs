@@ -53,6 +53,8 @@ impl Point<f32> {
 
 #[cfg(test)]
 mod test {
+    use shape::Rectangle;
+
     use crate::*;
     use std::mem;
 

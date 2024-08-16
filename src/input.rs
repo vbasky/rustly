@@ -1,6 +1,6 @@
 use std::process;
 
-use crate::{hashers, math, system, transformers};
+use crate::{accounting, hashers, math, system, transformers};
 
 pub struct Input {
     pub option: u32,
@@ -36,7 +36,8 @@ impl Input {
         println!("2: CBOR Data");
         println!("3: Math functions");
         println!("4: Hashmap");
-        println!("5: Exit");
+        println!("5: Accounting");
+        println!("6: Exit");
         println!("------------------");
     }
 
@@ -49,7 +50,18 @@ impl Input {
                 println!("Largest vector is {:?}", math::largest(&value));
             }
             4 => hashers::hashmap::display_hash(),
-            5 => process::exit(0),
+            5 => {
+                let mut customer = accounting::customer::Customer::new(
+                    String::from("Vikram"),
+                    String::from("10 Downing Street"),
+                    100.0,
+                );
+                println!("{}", customer.welcome());
+                let mut bank = accounting::bank::Bank::new(customer.balance, &mut customer);
+                bank.withdraw(50.0);
+                println!("Bank balance is: {}", bank.balance);
+            }
+            6 => process::exit(0),
             _ => {
                 println!("Invalid option");
                 process::exit(1);
