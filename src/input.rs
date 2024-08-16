@@ -59,7 +59,7 @@ impl Input {
                 println!("{}", customer.welcome());
                 let mut bank = accounting::bank::Bank::new(customer.balance, &mut customer);
                 bank.withdraw(50.0);
-                println!("Bank balance is: {}", bank.balance);
+                println!("Customer balance is: {}", customer.balance);
             }
             6 => process::exit(0),
             _ => {
