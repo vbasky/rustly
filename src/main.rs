@@ -41,6 +41,7 @@ mod config;
 mod day;
 mod file;
 mod guess;
+mod hashers;
 mod input;
 mod math;
 mod metadata;
@@ -52,7 +53,7 @@ mod transformers;
 // mod traverse;
 // use std::ops::Add;
 // use std::net::IpAddr;
-use std::process;
+//use std::process;
 
 #[allow(unused_variables)]
 fn main() {
@@ -155,22 +156,6 @@ fn main() {
     // println!("Vector 2 {:?}", vec2.pop());
 
     // println!("5.2 + 4.6 = {}", get_sum_gen(5.2, 4.6));
-
-    // let mut heros = HashMap::new();
-    // heros.insert("Superman", "Clark Kent");
-    // heros.insert("Batman", "Bruce Wayne");
-
-    // if heros.contains_key(&"Batman") {
-    //     let the_batman = heros.get(&"Batman");
-    //     match the_batman {
-    //         Some(_) => println!("Batman is a hero"),
-    //         None => println!("Batman is not a hero"),
-    //     }
-    // }
-
-    // for (k, v) in heros.iter() {
-    //     println!("{} = {}", k, v);
-    // }
 
     // let bob = Customer {
     //     name: String::from("Bob Smith"),
