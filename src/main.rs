@@ -36,7 +36,7 @@ mod accounting;
 mod article;
 mod closure;
 mod config;
-mod day;
+mod dates;
 mod file;
 mod guess;
 mod hashers;

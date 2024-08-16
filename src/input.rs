@@ -1,6 +1,7 @@
 use std::process;
 
-use crate::{accounting, hashers, math, system, transformers};
+use crate::dates::date::Date;
+use crate::{accounting, dates, hashers, math, system, transformers};
 
 pub struct Input {
     pub option: u32,
@@ -37,7 +38,8 @@ impl Input {
         println!("3: Math functions");
         println!("4: Hashmap");
         println!("5: Accounting");
-        println!("6: Exit");
+        println!("6: Date");
+        println!("7: Exit");
         println!("------------------");
     }
 
@@ -61,7 +63,8 @@ impl Input {
                 bank.withdraw(50.0);
                 println!("Customer balance is: {}", customer.balance);
             }
-            6 => process::exit(0),
+            6 => dates::date::Weekday::current_day(),
+            7 => process::exit(0),
             _ => {
                 println!("Invalid option");
                 process::exit(1);
