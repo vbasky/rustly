@@ -1,7 +1,8 @@
 use std::process;
 
 use crate::dates::date::Date;
-use crate::{accounting, dates, hashers, math, system, transformers};
+use crate::transformers::json;
+use crate::{accounting, dates, hashers, math, system, threads, transformers};
 
 pub struct Input {
     pub option: u32,
@@ -39,7 +40,10 @@ impl Input {
         println!("4: Hashmap");
         println!("5: Accounting");
         println!("6: Date");
-        println!("7: Exit");
+        println!("7: Json Serialize");
+        println!("8: Mutex");
+        println!("9: Print Json Address");
+        println!("10: Exit");
         println!("------------------");
     }
 
@@ -65,6 +69,8 @@ impl Input {
             }
             6 => dates::date::Weekday::current_day(),
             7 => process::exit(0),
+            8 => threads::spawn::spawn(),
+            9 => json::print_an_address(),
             _ => {
                 println!("Invalid option");
                 process::exit(1);

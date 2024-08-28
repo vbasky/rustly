@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use serde_json::Result;
 
 #[derive(Serialize, Deserialize)]
 struct Address {
@@ -7,18 +6,29 @@ struct Address {
     city: String,
 }
 
-pub fn print_an_address() -> Result<()> {
+pub fn print_an_address() {
     // Some data structure.
     let address = Address {
-        street: "10 Downing Street".to_owned(),
-        city: "London".to_owned(),
+        street: String::from("10 Downing Street"),
+        city: String::from("London".to_owned()),
     };
 
     // Serialize it to a JSON string.
-    let j = serde_json::to_string(&address)?;
+    let result = serde_json::to_string(&address);
 
-    // Print, write to a file, or send to an HTTP server.
-    println!("{}", j);
+    match result {
+        Ok(result) => println!("Addres is {}", result),
+        Err(_) => println!("Unable to parse the address"),
+    }
+}
 
-    Ok(())
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_print_an_address() {
+        let _result = print_an_address();
+        // assert!(result);
+    }
 }
