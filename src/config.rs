@@ -2,7 +2,7 @@ use std::error::Error;
 use std::fs;
 use std::{env, vec};
 
-pub trait Configure {
+pub trait Configuration {
     fn build(args: std::env::Args) -> Result<Self, &'static str>
     where
         Self: Sized;
@@ -17,7 +17,7 @@ pub struct Config {
     pub ignore_case: bool,
 }
 
-impl Configure for Config {
+impl Configuration for Config {
     fn build(mut args: std::env::Args) -> Result<Config, &'static str> {
         args.next();
 

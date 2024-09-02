@@ -1,4 +1,6 @@
-pub fn factorial(num: u128) -> u128 {
+use num_bigint::BigInt;
+
+pub fn factorial(num: u128) -> BigInt {
     (1..=num).product()
 }
 
@@ -58,7 +60,14 @@ mod tests {
     use super::*;
     #[test]
     fn factorial_should_compute() {
-        assert_eq!(factorial(5), 120);
+        assert_eq!(factorial(5), BigInt::from(120));
+    }
+
+    #[test]
+    fn factorial_of_a_bigint() {
+        let expected_result =
+            BigInt::parse_bytes(b"815915283247897734345611269596115894272000000000", 10).unwrap();
+        assert_eq!(factorial(40), expected_result);
     }
 
     #[test]

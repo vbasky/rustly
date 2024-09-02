@@ -1,6 +1,7 @@
 use std::process;
 
 use crate::dates::date::Date;
+use crate::math::math::Counter;
 use crate::transformers::json;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
 
@@ -36,14 +37,16 @@ impl Input {
     fn display_option() {
         println!("1: System Info");
         println!("2: CBOR Data");
-        println!("3: Math functions");
+        println!("3: Math Largest");
         println!("4: Hashmap");
         println!("5: Accounting");
         println!("6: Date");
         println!("7: Json Serialize");
         println!("8: Mutex");
         println!("9: Print Json Address");
-        println!("10: Exit");
+        println!("10: Counter");
+        println!("11: Factorial");
+        println!("12: Exit");
         println!("------------------");
     }
 
@@ -53,7 +56,7 @@ impl Input {
             2 => transformers::cbor::cbor(),
             3 => {
                 let value = [6, 7, 8, 9, 10];
-                println!("Largest vector is {:?}", math::largest(&value));
+                println!("Largest vector is {:?}", math::operations::largest(&value));
             }
             4 => hashers::hashmap::display_hash(),
             5 => {
@@ -71,6 +74,13 @@ impl Input {
             7 => process::exit(0),
             8 => threads::spawn::spawn(),
             9 => json::print_an_address(),
+            10 => Counter::new().for_each(|x| {
+                println!("Counter value is: {}", x);
+            }),
+            11 => {
+                let factorial_value = math::operations::factorial(120);
+                println!("Factorial value is: {}", factorial_value);
+            }
             _ => {
                 println!("Invalid option");
                 process::exit(1);
