@@ -51,11 +51,45 @@ impl Point<f32> {
     }
 }
 
+#[derive(Debug, PartialEq)]
+pub enum SquareContent {
+    Empty,
+    X,
+    O,
+}
+
+impl Default for SquareContent {
+    fn default() -> Self {
+        SquareContent::Empty
+    }
+}
+
+impl From<u8> for SquareContent {
+    fn from(c: u8) -> Self {
+        match c {
+            0 => SquareContent::Empty,
+            1 => SquareContent::X,
+            2 => SquareContent::O,
+            _ => panic!("Invalid square content"),
+        }
+    }
+}
+
+impl From<SquareContent> for u8 {
+    fn from(c: SquareContent) -> Self {
+        match c {
+            SquareContent::Empty => 0,
+            SquareContent::X => 1,
+            SquareContent::O => 2,
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
-    use shape::Rectangle;
-
     use crate::*;
+    use shape::Rectangle;
+    use shape::SquareContent;
     use std::mem;
 
     #[test]
@@ -65,5 +99,16 @@ mod test {
             mem::size_of::<[Rectangle; 2]>(),
             2 * mem::size_of::<f32>() * 2
         );
+    }
+
+    #[test]
+    fn test_square_content() {
+        let square = SquareContent::default();
+        assert_eq!(square, SquareContent::Empty);
+    }
+
+    #[test]
+    fn test_from() {
+        assert_eq!(SquareContent::from(1), SquareContent::X);
     }
 }
