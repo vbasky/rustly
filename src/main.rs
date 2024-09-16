@@ -41,6 +41,7 @@ mod file;
 mod guess;
 mod hashers;
 mod input;
+mod iterators;
 mod math;
 mod metadata;
 mod mybox;

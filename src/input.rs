@@ -1,6 +1,7 @@
 use std::process;
 
 use crate::dates::date::Date;
+use crate::iterators::password::Password;
 use crate::math::math::Counter;
 use crate::transformers::json;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
@@ -46,7 +47,9 @@ impl Input {
         println!("9: Print Json Address");
         println!("10: Counter");
         println!("11: Factorial");
-        println!("12: Exit");
+        println!("12: Print address in memory");
+        println!("13: Implement Iterators");
+        println!("14: Exit");
         println!("------------------");
     }
 
@@ -80,6 +83,27 @@ impl Input {
             11 => {
                 let factorial_value = math::operations::factorial(120);
                 println!("Factorial value is: {}", factorial_value);
+            }
+            12 => {
+                let mut numbers = [1, 2, 3, 4, 5];
+                println!("{:p}", &numbers[0]);
+                for n in &mut numbers {
+                    *n *= 2
+                }
+                for n in &numbers {
+                    println!("{:p}", n);
+                    println!("{}", n);
+                }
+            }
+            13 => {
+                for p in Password::new().into_iter().take(3) {
+                    println!("Password is: {}", p);
+                }
+
+                Password::with_length(5)
+                    .into_iter()
+                    .take(3)
+                    .for_each(|p| println!("The next password is {} ", p));
             }
             _ => {
                 println!("Invalid option");

@@ -6,19 +6,19 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rand = "0.8.5"
 chrono = "0.4.38"
-env_logger = "0.11.3"
-kamadak-exif = "0.5.5"
-serde_json = "1.0.103"
-serde = { version = "1.0.174", features = ["derive"] }
-features = "0.10.0"
-derive = "1.0.0"
-walkdir = "2.3.3"
-glob = "0.3.1"
-sysinfo = "0.30.7"
 ciborium = "0.2.2"
+derive = "1.0.0"
+env_logger = "0.11.3"
+features = "0.10.0"
+glob = "0.3.1"
+kamadak-exif = "0.5.5"
 num-bigint = "0.4.6"
+rand = "0.8.5"
+serde = { version = "1.0.174", features = ["derive"] }
+serde_json = "1.0.103"
+sysinfo = "0.30.7"
+walkdir = "2.3.3"
 
 [target.x86_64-pc-windows-msvc]
 rustflags = ["-C", "link-arg=-fuse-ld=lld"]
