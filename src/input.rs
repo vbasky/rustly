@@ -105,6 +105,10 @@ impl Input {
                     .take(3)
                     .for_each(|p| println!("The next password is {} ", p));
             }
+            14 => {
+                println!("Good Bye");
+                process::exit(0);
+            }
             _ => {
                 println!("Invalid option");
                 process::exit(1);

@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.38"
 ciborium = "0.2.2"
+clap = { version = "4.5.18", features = ["derive"] }
 derive = "1.0.0"
 env_logger = "0.11.3"
 features = "0.10.0"
@@ -31,3 +32,9 @@ rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld"]
 
 [target.x86_64-unknown-linux-gnu]
 rustflags = ["-C", "linker=clang", "-C", "link-arg=-fuse-ld=lld"]
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+panic = "abort"

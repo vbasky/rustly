@@ -13,6 +13,7 @@
 // use crate::transformers::string::first_word;
 // use crate::transformers::string::{longest, longest_with_an_announcement};
 
+use clap::Parser;
 // use crate::transformers::transliterate::Transliterate;
 // use article::{Article, Summary, Tweet};
 // use chrono::Local;
@@ -23,6 +24,7 @@ use input::Input;
 // use mybox::MyBox;
 // use std::cmp::Ordering;
 // use std::collections::HashMap;
+use args::Rustly;
 use std::fs::File;
 // use std::io::ErrorKind;
 // use std::thread;
@@ -31,8 +33,8 @@ use std::fs::File;
 // use transformers::cbor::cbor;
 // use transformers::string::heart;
 // use transformers::transliterate::{ISlp1ToIastTransliterate, IastToSlp1Transliterate};
-
 mod accounting;
+mod args;
 mod article;
 mod closure;
 mod config;
@@ -57,8 +59,19 @@ mod transformers;
 
 #[allow(unused_variables)]
 fn main() {
-    Input::new().compute();
+    // let matches = command!()
+    //     .arg(
+    //         Arg::new("input")
+    //             .required(true)
+    //             .help("Input to parse")
+    //             .short('i')
+    //             .long("input"),
+    //     )
+    //     .get_matches();
 
+    // Input::new().compute();
+
+    let args = Rustly::parse();
     // random::guess_random_number();
     // let config = Config::build(env::args()).unwrap_or_else(|err| {
     //     println!("Didnt enter any option: {err}");
