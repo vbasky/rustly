@@ -3,6 +3,7 @@ use std::process;
 use crate::dates::date::Date;
 use crate::iterators::password::Password;
 use crate::math::math::Counter;
+use crate::shape::{Circle, PointXY, Rectangle, Shape};
 use crate::transformers::json;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
 
@@ -49,7 +50,8 @@ impl Input {
         println!("11: Factorial");
         println!("12: Print address in memory");
         println!("13: Implement Iterators");
-        println!("14: Exit");
+        println!("14: Show Traits for shapes");
+        println!("15: Exit");
         println!("------------------");
     }
 
@@ -106,6 +108,26 @@ impl Input {
                     .for_each(|p| println!("The next password is {} ", p));
             }
             14 => {
+                let plane1 = PointXY { x: 10.0, y: 'c' };
+                println!("First plane is {:?}", plane1);
+
+                let plane2 = PointXY {
+                    x: 4,
+                    y: "Hello".to_string(),
+                };
+                println!("Second plane is {:?}", plane2);
+
+                let result = plane1.mixup(plane2);
+
+                println!("Mixed up plane is {:?}", result);
+
+                let rectangle: Rectangle = Shape::new(10.0, 2.3);
+                let circle: Circle = Shape::new(12.2, 2.4);
+
+                println!("Rect area is {:?}", rectangle.area());
+                println!("Circle area is {:?}", circle.area());
+            }
+            15 => {
                 println!("Good Bye");
                 process::exit(0);
             }

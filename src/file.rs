@@ -1,6 +1,7 @@
-use crate::File;
-
-use std::io::{self, Read};
+use std::{
+    fs::File,
+    io::{self, Read},
+};
 
 pub fn read_username_from_file(file: String) -> Result<String, io::Error> {
     let mut username = String::new();
