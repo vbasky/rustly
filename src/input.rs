@@ -5,6 +5,7 @@ use crate::iterators::password::Password;
 use crate::math::math::Counter;
 use crate::shape::{Circle, PointXY, Rectangle, Shape};
 use crate::transformers::json;
+use crate::transformers::string;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
 
 pub struct Input {
@@ -51,7 +52,8 @@ impl Input {
         println!("12: Print address in memory");
         println!("13: Implement Iterators");
         println!("14: Show Traits for shapes");
-        println!("15: Exit");
+        println!("15: String manipulations");
+        println!("16: Exit");
         println!("------------------");
     }
 
@@ -128,6 +130,13 @@ impl Input {
                 println!("Circle area is {:?}", circle.area());
             }
             15 => {
+                let first = String::from("This is the start");
+                let last = String::from("This is the end");
+
+                let result = string::longest(first.as_str(), last.as_str());
+                println!("The longest is {result}");
+            }
+            16 => {
                 println!("Good Bye");
                 process::exit(0);
             }

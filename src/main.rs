@@ -1,3 +1,4 @@
+#[allow(unused_imports)]
 use config::{Config, Configuration};
 use std::{env, process};
 
@@ -29,6 +30,7 @@ mod transformers;
 fn main() {
     // let args = Rustly::parse();
     // let input = Input::new().compute();
+
     let config = Config::build(env::args()).unwrap_or_else(|err| {
         println!("Didnt enter any option: {err}");
         process::exit(1)
