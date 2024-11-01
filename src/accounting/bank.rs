@@ -16,7 +16,7 @@ impl<'a> Bank<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::accounting::customer::Customer;
+    use crate::accounting::{customer::Customer, debitcard::DebitCardNumber};
 
     use super::Bank;
     #[test]
@@ -25,6 +25,7 @@ mod tests {
             String::from("Vikram"),
             String::from("10 Downing Street"),
             100.0,
+            DebitCardNumber::new(String::from("1234-5678-9012-3456")),
         );
         let mut bank = Bank::new(100.0, &mut customer);
         bank.withdraw(50.0);

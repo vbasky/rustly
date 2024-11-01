@@ -1,3 +1,2 @@
-asm! { METHOD:
-  cargo asm lor::{METHOD};
-}
+asm METHOD:
+  cargo asm rustly::{METHOD};

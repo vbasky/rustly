@@ -1,5 +1,6 @@
 use std::process;
 
+use crate::accounting::debitcard::DebitCardNumber;
 use crate::dates::date::Date;
 use crate::iterators::password::Password;
 use crate::math::math::Counter;
@@ -71,6 +72,7 @@ impl Input {
                     String::from("Vikram"),
                     String::from("10 Downing Street"),
                     100.0,
+                    DebitCardNumber::new(String::from("1234-5678-9012-3456")),
                 );
                 println!("{}", customer.welcome());
                 let mut bank = accounting::bank::Bank::new(customer.balance, &mut customer);
