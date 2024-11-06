@@ -2,8 +2,6 @@
 use config::{Config, Configuration};
 use std::{env, process};
 
-// use args::Rustly;
-// use clap::Parser;
 // use input::Input;
 
 mod accounting;
@@ -27,6 +25,7 @@ mod threads;
 mod transformers;
 
 #[allow(unused_variables)]
+#[allow(dead_code)]
 fn main() {
     // let args = Rustly::parse();
     // let input = Input::new().compute();

@@ -1,5 +1,6 @@
 use sysinfo::System;
 
+#[allow(dead_code)]
 pub fn get_system_info() {
     // Please note that we use "new_all" to ensure that all list of
     // components, network interfaces, disks and users are already

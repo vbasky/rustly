@@ -1,5 +1,6 @@
 use super::customer::Customer;
 
+#[allow(dead_code)]
 pub struct Bank<'a> {
     pub balance: f32,
     pub customer: &'a mut Customer,

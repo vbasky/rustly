@@ -1,3 +1,5 @@
+#[allow(unused_must_use)]
+#[allow(dead_code)]
 pub trait Summary {
     fn summarize_author(&self) -> String;
 
@@ -10,6 +12,7 @@ pub trait Summary {
     }
 }
 
+#[allow(dead_code)]
 pub struct Article {
     pub headline: String,
     pub location: String,
@@ -23,6 +26,7 @@ impl Summary for Article {
     }
 }
 
+#[allow(dead_code)]
 pub struct Tweet {
     pub username: String,
     pub content: String,

@@ -4,6 +4,7 @@ use walkdir::WalkDir;
 
 use exif::{DateTime, In, Reader, Tag, Value};
 
+#[allow(dead_code)]
 pub fn exif_reader() {
     let mut count = 0;
     for e in WalkDir::new("./src/images")

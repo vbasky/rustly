@@ -15,6 +15,7 @@ impl Default for Day {
     }
 }
 
+#[allow(dead_code)]
 impl Day {
     pub fn is_weekend(&self) -> bool {
         match self {

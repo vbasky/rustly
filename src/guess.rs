@@ -2,10 +2,12 @@ use rand::Rng;
 use std::cmp::Ordering;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct Guess {
     value: i32,
 }
 
+#[allow(dead_code)]
 impl Guess {
     pub fn new(value: i32) -> Guess {
         if !(1..=100).contains(&value) {

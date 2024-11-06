@@ -9,10 +9,12 @@ use crate::transformers::json;
 use crate::transformers::string;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
 
+#[allow(dead_code)]
 pub struct Input {
     pub option: u32,
 }
 
+#[allow(dead_code)]
 impl Input {
     pub fn new() -> Self {
         Input::display_option();

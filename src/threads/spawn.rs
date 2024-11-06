@@ -1,5 +1,6 @@
 use std::sync::{Arc, Mutex};
 
+#[allow(dead_code)]
 pub fn spawn() {
     let counter = Arc::new(Mutex::new(0));
 

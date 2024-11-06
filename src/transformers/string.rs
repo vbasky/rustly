@@ -8,6 +8,7 @@ pub fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     }
 }
 
+#[allow(dead_code)]
 pub fn first_word(s: &String) -> &str {
     let bytes = s.as_bytes();
 
@@ -20,6 +21,7 @@ pub fn first_word(s: &String) -> &str {
     &s[..]
 }
 
+#[allow(dead_code)]
 pub fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
 where
     T: Display,
@@ -49,19 +51,23 @@ where
     }
 }
 
+#[allow(dead_code)]
 pub fn is_all_palindrome(strings: Vec<&str>) -> bool {
     strings.iter().all(|s| is_palindrome(s))
 }
 
+#[allow(dead_code)]
 pub fn calculate_length(s: &String) -> usize {
     s.len()
 }
 
+#[allow(dead_code)]
 pub fn dangle() -> String {
     let s = String::from("hello");
     s
 }
 
+#[allow(dead_code)]
 pub fn heart() -> String {
     // some bytes, in a vector
     let sparkle_heart = vec![240, 159, 146, 150];
@@ -77,6 +83,7 @@ pub struct StrSplit<'a> {
     delimiter: &'a str,
 }
 
+#[allow(dead_code)]
 impl<'a> StrSplit<'a> {
     pub fn new(haystack: &'a str, delimiter: &'a str) -> Self {
         Self {

@@ -7,11 +7,13 @@ pub struct Rectangle {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct Circle {
     pub width: f32,
     pub height: f32,
 }
 
+#[allow(dead_code)]
 pub trait Shape {
     fn new(width: f32, height: f32) -> Self;
     fn area(&self) -> f32;
@@ -35,29 +37,34 @@ impl Shape for Circle {
     }
 }
 
+#[allow(dead_code)]
 pub struct Point<T> {
     pub x: T,
     pub y: T,
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct PointXY<X1, Y1> {
     pub x: X1,
     pub y: Y1,
 }
 
+#[allow(dead_code)]
 impl<T> Point<T> {
     pub fn x(&self) -> &T {
         &self.x
     }
 }
 
+#[allow(dead_code)]
 impl Point<f32> {
     pub fn distance_from_origin(&self) -> f32 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 }
 
+#[allow(dead_code)]
 impl<X1, Y1> PointXY<X1, Y1> {
     pub fn mixup<X2, Y2>(self, other: PointXY<X2, Y2>) -> PointXY<X1, Y2> {
         PointXY {

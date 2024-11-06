@@ -8,6 +8,7 @@ pub struct ISlp1ToIastTransliterate {
     map: HashMap<&'static str, &'static str>,
 }
 
+#[allow(dead_code)]
 pub trait Transliterate {
     fn new() -> Self;
     fn transliterate(&self, input: &str);

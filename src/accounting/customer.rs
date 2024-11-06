@@ -1,6 +1,7 @@
 use super::debitcard::DebitCardNumber;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct Customer {
     pub name: String,
     pub address: String,

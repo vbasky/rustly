@@ -4,6 +4,7 @@ pub struct Password {
     length: usize,
 }
 
+#[allow(dead_code)]
 impl Password {
     pub fn new() -> Self {
         Self::with_length(10)

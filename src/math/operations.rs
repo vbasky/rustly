@@ -16,6 +16,7 @@ pub fn largest<T: PartialOrd>(list: &[T]) -> &T {
     largest
 }
 
+#[allow(dead_code)]
 pub fn divide(numerator: f64, denominator: f64) -> Option<f64> {
     if denominator == 0.0 {
         None
@@ -24,10 +25,12 @@ pub fn divide(numerator: f64, denominator: f64) -> Option<f64> {
     }
 }
 
+#[allow(dead_code)]
 pub fn sum_of_squares(input: &[i32]) -> i32 {
     input.iter().map(|&i| i * i).sum()
 }
 
+#[allow(dead_code)]
 pub struct Cacher<T>
 where
     T: Fn(u32) -> u32,
@@ -36,6 +39,7 @@ where
     value: Option<u32>,
 }
 
+#[allow(dead_code)]
 impl<T> Cacher<T>
 where
     T: Fn(u32) -> u32,

@@ -1,15 +1,18 @@
+#[allow(dead_code)]
 pub struct Rgb {
     pub r: u8,
     pub g: u8,
     pub b: u8,
 }
 
+#[allow(dead_code)]
 pub struct Yuv {
     y: f32,
     u: f32,
     v: f32,
 }
 
+#[allow(dead_code)]
 trait Color {
     fn to_yuv(&self) -> Yuv;
 }
