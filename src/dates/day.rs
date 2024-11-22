@@ -1,27 +1,58 @@
 #[allow(dead_code)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub enum Day {
-    Sun = 1,
-    Mon = 2,
-    Tue = 3,
-    Wed = 4,
-    Thu = 5,
-    Fri = 6,
-    Sat = 7,
+    Sunday = 1,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
 }
 
 impl Default for Day {
     fn default() -> Self {
-        Self::Sun
+        Self::Sunday
+    }
+}
+
+impl Day {
+    // Get day name as string
+    pub fn name(self) -> &'static str {
+        match self {
+            Day::Sunday => "Sunday",
+            Day::Monday => "Monday",
+            Day::Tuesday => "Tuesday",
+            Day::Wednesday => "Wednesday",
+            Day::Thursday => "Thursday",
+            Day::Friday => "Friday",
+            Day::Saturday => "Saturday",
+        }
+    }
+
+    pub fn next_day(self) -> Self {
+        match self {
+            Day::Sunday => Day::Monday,
+            Day::Monday => Day::Tuesday,
+            Day::Tuesday => Day::Wednesday,
+            Day::Wednesday => Day::Thursday,
+            Day::Thursday => Day::Friday,
+            Day::Friday => Day::Saturday,
+            Day::Saturday => Day::Sunday,
+        }
     }
 }
 
 #[allow(dead_code)]
 impl Day {
-    pub fn is_weekend(&self) -> bool {
-        match self {
-            Day::Sat | Day::Sun => true,
-            Day::Mon | Day::Tue | Day::Wed | Day::Thu | Day::Fri => false,
-        }
+    // Check if it's a weekend
+    pub fn is_weekend(self) -> bool {
+        matches!(self, Day::Saturday | Day::Sunday)
+    }
+
+    // Check if it's a weekday
+    pub fn is_weekday(self) -> bool {
+        !self.is_weekend()
     }
 }
 
@@ -30,8 +61,24 @@ mod tests {
     use super::Day;
 
     #[test]
-    fn check_is_weekend() {
-        let today = Day::Mon;
-        assert_eq!(today.is_weekend(), false);
+    fn test_is_weekend() {
+        assert!(Day::Sunday.is_weekend());
+        assert!(Day::Saturday.is_weekend());
+        assert!(!Day::Monday.is_weekend());
+    }
+
+    #[test]
+    fn test_is_weekday() {
+        assert!(Day::Monday.is_weekday());
+        assert!(!Day::Sunday.is_weekday());
+    }
+
+    #[test]
+    fn test_next_day() {}
+
+    #[test]
+    fn test_day_name() {
+        assert_eq!(Day::Monday.name(), "Monday");
+        assert_eq!(Day::Sunday.name(), "Sunday");
     }
 }
