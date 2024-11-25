@@ -1,5 +1,3 @@
-use base64::encode;
-
 pub fn encode_base64(data: &str) -> String {
     base64::encode(data)
 }

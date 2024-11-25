@@ -2,6 +2,7 @@ use std::error::Error;
 use std::fs;
 use std::{env, vec};
 
+#[allow(dead_code)]
 pub trait Configuration {
     fn build(args: std::env::Args) -> Result<Self, &'static str>
     where

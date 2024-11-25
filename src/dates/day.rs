@@ -16,6 +16,7 @@ impl Default for Day {
     }
 }
 
+#[allow(dead_code)]
 impl Day {
     // Get day name as string
     pub fn name(self) -> &'static str {
