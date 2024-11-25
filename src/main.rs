@@ -1,6 +1,6 @@
 #[allow(unused_imports)]
 use config::{Config, Configuration};
-use std::{env, process};
+// use std::{env, process};
 
 use input::Input;
 
@@ -10,6 +10,7 @@ mod article;
 mod closure;
 mod config;
 mod dates;
+mod encoders;
 mod file;
 mod guess;
 mod hashers;
@@ -30,19 +31,19 @@ fn main() {
     // let args = Rustly::parse();
     let input = Input::new().compute();
 
-//     let config = Config::build(env::args()).unwrap_or_else(|err| {
-//         println!("Didnt enter any option: {err}");
-//         process::exit(1)
-//     });
-//
-//     let result = Config::run(&self::Config {
-//         query: config.query,
-//         filename: config.filename,
-//         ignore_case: config.ignore_case,
-//     });
-//
-//     if let Err(e) = result {
-//         println!("Application error: {e}");
-//         process::exit(1);
-//     }
+    //     let config = Config::build(env::args()).unwrap_or_else(|err| {
+    //         println!("Didnt enter any option: {err}");
+    //         process::exit(1)
+    //     });
+    //
+    //     let result = Config::run(&self::Config {
+    //         query: config.query,
+    //         filename: config.filename,
+    //         ignore_case: config.ignore_case,
+    //     });
+    //
+    //     if let Err(e) = result {
+    //         println!("Application error: {e}");
+    //         process::exit(1);
+    //     }
 }

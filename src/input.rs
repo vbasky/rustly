@@ -2,6 +2,7 @@ use std::process;
 
 use crate::accounting::debitcard::DebitCardNumber;
 use crate::dates::date::Date;
+use crate::encoders;
 use crate::iterators::password::Password;
 use crate::math::math::Counter;
 use crate::shape::{Circle, PointXY, Rectangle, Shape};
@@ -57,7 +58,8 @@ impl Input {
         println!("14: Show Traits for shapes");
         println!("15: String manipulations");
         println!("16: Parse Values");
-        println!("17: Exit");
+        println!("17: Base64 Encode");
+        println!("18: Exit");
         println!("------------------");
     }
 
@@ -142,15 +144,20 @@ impl Input {
                 println!("The longest is {result}");
             }
             16 => {
-            	let num_as_str = "2";
-            	let num = num_as_str.parse::<usize>();
+                let num_as_str = "2";
+                let num = num_as_str.parse::<usize>();
 
-            	match num {
-            		Ok(n) => println!("The number is {n}"),
-            		Err(_) => println!("Cannot parse this number")
-            	}
+                match num {
+                    Ok(n) => println!("The number is {n}"),
+                    Err(_) => println!("Cannot parse this number"),
+                }
             }
             17 => {
+                let data = "Hello World";
+                let encoded = encoders::base64::encode_base64(data);
+                println!("Encoded data is: {encoded}");
+            }
+            18 => {
                 println!("Good Bye");
                 process::exit(0);
             }
