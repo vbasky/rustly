@@ -1,6 +1,7 @@
 use std::process;
 
 use crate::accounting::debitcard::DebitCardNumber;
+use crate::algorithms::sort;
 use crate::dates::date::Date;
 use crate::encoders;
 use crate::iterators::password::Password;
@@ -59,7 +60,8 @@ impl Input {
         println!("15: String manipulations");
         println!("16: Parse Values");
         println!("17: Base64 Encode");
-        println!("18: Exit");
+        println!("18: Execute Sorting");
+        println!("19: Exit");
         println!("------------------");
     }
 
@@ -158,6 +160,11 @@ impl Input {
                 println!("Encoded data is: {encoded}");
             }
             18 => {
+                let mut arr = [64, 34, 25, 12, 22, 11, 90];
+                sort::bubble_sort(&mut arr);
+                println!("Sorted array is: {:?}", arr);
+            }
+            19 => {
                 println!("Good Bye");
                 process::exit(0);
             }
