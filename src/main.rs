@@ -3,7 +3,7 @@ use config::{Config, Configuration};
 // use std::{env, process};
 use clap::{Parser, Subcommand};
 use input::Input;
-
+use std::process;
 mod accounting;
 mod algorithms;
 mod args;
@@ -48,13 +48,34 @@ struct TypeCommand {
     value: String,
 }
 
+#[derive(Debug)]
+#[allow(dead_code)]
+struct Container<T> {
+    value: T,
+}
+
 #[allow(unused_variables)]
 #[allow(dead_code)]
 fn main() {
     // let args = Rustly::parse();
     // let args = Arguments::parse();
     // println!("The args is {}", args.name);
-    let input = Input::new().compute();
+
+    let container = Container { value: "Something" };
+    let container2: Container<Option<&str>> = Container { value: None };
+
+    let input = match Input::new() {
+        Ok(input) => input,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            process::exit(1);
+        }
+    };
+
+    if let Err(e) = input.compute() {
+        eprintln!("Error: {}", e);
+        process::exit(1);
+    }
     //     let config = Config::build(env::args()).unwrap_or_else(|err| {
     //         println!("Didnt enter any option: {err}");
     //         process::exit(1)
