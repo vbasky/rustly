@@ -12,16 +12,16 @@ mod closure;
 mod config;
 mod dates;
 mod encoders;
-mod file;
+mod generators;
 mod generics;
-mod guess;
 mod hashers;
 mod input;
 mod iterators;
 mod math;
 mod metadata;
 mod mybox;
-mod random;
+mod scoping;
+mod standard;
 mod system;
 mod threads;
 mod transformers;
@@ -61,8 +61,8 @@ fn main() {
     // let args = Arguments::parse();
     // println!("The args is {}", args.name);
 
-    let container = Container { value: "Something" };
-    let container2: Container<Option<&str>> = Container { value: None };
+    // let container = Container { value: "Something" };
+    // let container2: Container<Option<&str>> = Container { value: None };
 
     let input = match Input::new() {
         Ok(input) => input,
