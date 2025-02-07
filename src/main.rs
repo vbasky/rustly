@@ -1,5 +1,5 @@
 #[allow(unused_imports)]
-use config::{Config, Configuration};
+use parsers::config::{Config, Configuration};
 // use std::{env, process};
 use clap::{Parser, Subcommand};
 use input::Input;
@@ -9,7 +9,6 @@ mod algorithms;
 mod args;
 mod article;
 mod closure;
-mod config;
 mod dates;
 mod encoders;
 mod generators;
@@ -19,7 +18,8 @@ mod input;
 mod iterators;
 mod math;
 mod metadata;
-mod mybox;
+mod parsers;
+mod pointers;
 mod standard;
 mod system;
 mod threads;
