@@ -7,7 +7,7 @@ use crate::iterators::password::Password;
 use crate::math::math::Counter;
 use crate::transformers::json;
 use crate::transformers::string;
-use crate::{accounting, dates, hashers, math, scoping, system, threads, transformers};
+use crate::{accounting, dates, hashers, math, system, threads, transformers};
 use std::process;
 use thiserror::Error;
 
@@ -69,8 +69,7 @@ impl Input {
         println!("16: Parse Values");
         println!("17: Base64 Encode");
         println!("18: Execute Sorting");
-        println!("19: Raii");
-        println!("20: Exit");
+        println!("19: Exit");
         println!("------------------");
     }
 
@@ -207,24 +206,6 @@ impl Input {
                 Ok(())
             }
             19 => {
-                // Allocate an interger on the heap
-                let _box2 = Box::new(5i32);
-
-                // A nested scope
-                {
-                    // Allocate an integer on the heap
-                    let _box3 = Box::new(4i32);
-                    // _box3 is destroyed here and memory is freed
-                }
-
-                for _ in 0u32..1_000 {
-                    scoping::raii::create_box();
-                }
-
-                Ok(())
-                // _box2 is destroyed here and memory is freed
-            }
-            20 => {
                 println!("Good Bye");
                 process::exit(0);
             }

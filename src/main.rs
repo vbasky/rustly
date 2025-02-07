@@ -20,7 +20,6 @@ mod iterators;
 mod math;
 mod metadata;
 mod mybox;
-mod scoping;
 mod standard;
 mod system;
 mod threads;
