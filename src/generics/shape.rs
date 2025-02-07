@@ -1,4 +1,5 @@
 use core::f32::consts::PI;
+use std::fmt::Display;
 
 #[derive(Debug)]
 pub struct Rectangle {
@@ -34,6 +35,16 @@ impl Shape for Circle {
     }
     fn area(&self) -> f32 {
         (self.width / 2.0).powf(2.0) * PI
+    }
+}
+
+impl Display for Circle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "Circle of width {:.1} and height {:.1}",
+            self.width, self.height
+        )
     }
 }
 
@@ -110,10 +121,9 @@ impl From<SquareContent> for u8 {
 
 #[cfg(test)]
 mod test {
-    use crate::*;
-    use shape::Rectangle;
-    use shape::SquareContent;
     use std::mem;
+
+    use crate::generics::shape::{Circle, Rectangle, SquareContent};
 
     #[test]
     fn check_mem_size() {
@@ -122,6 +132,7 @@ mod test {
             mem::size_of::<[Rectangle; 2]>(),
             2 * mem::size_of::<f32>() * 2
         );
+        assert_eq!(mem::size_of::<Rectangle>(), 2 * mem::size_of::<f32>());
     }
 
     #[test]
@@ -133,5 +144,14 @@ mod test {
     #[test]
     fn test_from() {
         assert_eq!(SquareContent::from(1), SquareContent::X);
+    }
+
+    #[test]
+    fn test_circle_is_printable() {
+        let circle = Circle {
+            width: 10.0,
+            height: 12.0,
+        };
+        assert_eq!(circle.to_string(), "Circle of width 10.0 and height 12.0");
     }
 }
