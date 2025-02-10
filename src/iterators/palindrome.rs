@@ -14,8 +14,9 @@ mod tests {
 
     #[test]
     fn test_is_palindrome() {
-        assert_eq!("".to_string().is_palindrome(), true);
-        assert_eq!("a".to_string().is_palindrome(), true);
-        assert_eq!("madam".to_string().is_palindrome(), true);
+        assert!("".to_string().is_palindrome());
+        assert!("a".to_string().is_palindrome());
+        assert!("madam".to_string().is_palindrome());
+        assert!("racecar".to_string().is_palindrome());
     }
 }
