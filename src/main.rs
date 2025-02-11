@@ -54,7 +54,7 @@ struct Container<T> {
 #[allow(dead_code)]
 fn main() {
     // let args = Rustly::parse();
-    // let args = Arguments::parse();
+    let args = Arguments::parse();
     // println!("The args is {}", args.name);
 
     // let container = Container { value: "Something" };

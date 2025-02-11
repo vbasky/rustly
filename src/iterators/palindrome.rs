@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub trait Palindrome {
     fn is_palindrome(val: impl Into<String>) -> bool;
 }
