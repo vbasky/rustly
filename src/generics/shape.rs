@@ -85,17 +85,12 @@ impl<X1, Y1> PointXY<X1, Y1> {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Default, Debug, PartialEq)]
 pub enum SquareContent {
+    #[default]
     Empty,
     X,
     O,
-}
-
-impl Default for SquareContent {
-    fn default() -> Self {
-        SquareContent::Empty
-    }
 }
 
 impl From<u8> for SquareContent {

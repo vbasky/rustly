@@ -10,7 +10,7 @@ pub fn print_an_address() {
     // Some data structure.
     let address = Address {
         street: String::from("10 Downing Street"),
-        city: String::from("London".to_owned()),
+        city: String::from("London"),
     };
 
     // Serialize it to a JSON string.

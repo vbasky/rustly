@@ -53,18 +53,17 @@ where
 
 #[allow(dead_code)]
 pub fn is_all_palindrome(strings: Vec<&str>) -> bool {
-    strings.iter().all(|s| is_palindrome(s))
+    strings.iter().all(is_palindrome)
 }
 
 #[allow(dead_code)]
-pub fn calculate_length(s: &String) -> usize {
+pub fn calculate_length(s: &str) -> usize {
     s.len()
 }
 
 #[allow(dead_code)]
 pub fn dangle() -> String {
-    let s = String::from("hello");
-    s
+    String::from("hello")
 }
 
 #[allow(dead_code)]
@@ -73,9 +72,7 @@ pub fn heart() -> String {
     let sparkle_heart = vec![240, 159, 146, 150];
 
     // We know these bytes are valid, so we'll use `unwrap()`.
-    let sparkle_heart = String::from_utf8(sparkle_heart).unwrap();
-
-    sparkle_heart
+    String::from_utf8(sparkle_heart).unwrap()
 }
 
 pub struct StrSplit<'a> {

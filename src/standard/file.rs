@@ -12,11 +12,7 @@ pub fn read_username_from_file(file: String) -> Result<String, io::Error> {
 
 #[allow(dead_code)]
 pub fn read_username_from_file_via_match(file: String) -> Result<String, io::Error> {
-    let f = File::open(file);
-    let mut f = match f {
-        Ok(file) => file,
-        Err(e) => return Err(e),
-    };
+    let mut f = File::open(file)?;
     let mut username = String::new();
     match f.read_to_string(&mut username) {
         Ok(_) => Ok(username),

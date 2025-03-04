@@ -4,7 +4,7 @@ use crate::dates::date::Date;
 use crate::encoders;
 use crate::generics::shape::{Circle, PointXY, Rectangle, Shape};
 use crate::iterators::password::Password;
-use crate::math::math::Counter;
+use crate::math::counter::Counter;
 use crate::transformers::json;
 use crate::transformers::string;
 use crate::{accounting, dates, hashers, math, system, threads, transformers};
@@ -34,7 +34,7 @@ impl Input {
         Input::display_option();
 
         let option = Self::read_input("Please enter an option")?;
-        if option < 1 || option > 19 {
+        if !(1..=19).contains(&option) {
             return Err(InputError::InvalidInput("Option out of range".to_string()));
         }
 
